@@ -2,10 +2,11 @@
 <html>
 <head>
 	<title>회원가입</title>
-	<link rel="stylesheet" type="text/css" href="register.css" />
-	<script type="text/javascript" src="register.js"></script>
+	<!-- Style Sheet -->
+	<!--<link rel="stylesheet" type="text/css" href="register.css" /> -->
+	<script type="text/html" src="register.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" />
-	<script type="text/javascript" src="https://fonts.googleapis.com/icon?family=Material+Icons"></script>
+	<script type="text/css" src="https://fonts.googleapis.com/icon?family=Material+Icons"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
@@ -13,7 +14,7 @@
 <body>
 	<div id="login-page" class="row">
 	  <div class="col s12 z-depth-4 card-panel">
-	    <form class="login-form">
+	    <!--<form class="login-form">-->
 	      <div class="row">
 	        <div class="input-field col s12 center">
 	          <h4>회원가입</h4>
@@ -23,7 +24,7 @@
 	      <div class="row margin">
 	        <div class="input-field col s12">
 	          <!-- <i class="mdi-social-person-outline prefix"></i> -->
-	          <input id="username" name="username" type="text"/>
+	          <input id="username" name="username" type="text" value=""/>
 	          <label for="username">이름</label>
 	        </div>
 	      </div>
@@ -31,7 +32,7 @@
 	      <div class="row margin">
 	        <div class="input-field col s12">
 	          <!-- <i class="mdi-social-person-outline prefix"></i> -->
-	          <input id="email" name="email" type="text" style="cursor: auto;" />
+	          <input id="email" name="email" type="text" value="" style="cursor: auto;" />
 	          <label for="email">이메일</label>
 	        </div>
 	      </div>
@@ -39,7 +40,7 @@
 	      <div class="row margin">
 	        <div class="input-field col s12">
 	          <!-- <i class="mdi-action-lock-outline prefix"></i> -->
-	          <input id="password" name="password" type="password" />
+	          <input id="password" name="password" type="password" value="" />
 	          <label for="password">비밀번호</label>
 	        </div>
 	      </div>
@@ -47,7 +48,7 @@
 	      <div class="row margin">
 	        <div class="input-field col s12">
 	          <!-- <i class="mdi-action-lock-outline prefix"></i> -->
-	          <input id="bank" name="bank" type="text" />
+	          <input id="bank" name="bank" type="text" value="" />
 	          <label for="bank">은행명</label>
 	        </div>
 	      </div>
@@ -55,18 +56,51 @@
 	      <div class="row margin">
 	        <div class="input-field col s12">
 	          <!-- <i class="mdi-action-lock-outline prefix"></i> -->
-	          <input id="account" name="account" type="text" />
+	          <input id="account" name="account" type="text" value="" />
 	          <label for="account">계좌번호</label>
 	        </div>
 	      </div>
 
 	      <div class="row">
 	        <div class="input-field col s12">
-	          <button type="submit" class="btn waves-effect waves-light col s12">회원가입</button>
+	          <button id="registerBtn" class="btn waves-effect waves-light col s12">회원가입</button>
 	        </div>
 	      </div>
-	    </form>
+	    <!--</form>-->
 	  </div>
 	</div>
+	<!-- JQuery library file. requared all pages -->
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<!-- Template global script file. requared all pages -->
+	<script src="js/global.script.js"></script>
+	<script>
+		$("#registerBtn").click(function () {
+		var username = $("#username").val();
+		alert("username : ", username);
+		var email = $("#email").val();
+		var password = $("#password").val();
+		var bank = $("#bank").val();
+		var account = $("#account").val();
+	
+		$.ajax({
+				url:'/register',
+				type : 'POST',
+				data : {
+					username: username,
+					email: email,
+					password: password,
+					bank: bank,
+					account: account
+				},
+				success:function(responseData){
+				  if(responseData == "1"){
+					alert("가입 완료");
+					//로그인 화면으로 넘어가면 좋을 것 같아요. - 미래
+				  }
+				}
+			})  
+	  });
+	</script>
 </body>
+
 </html>
