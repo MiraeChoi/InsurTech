@@ -11,5 +11,8 @@ app.get('/login',function(req,res){
 app.get('/register',function(req,res){
     res.render('register');
 })
+app.get('/insApply',function(req,res){
+    res.render('insApply');
+})
 
 app.listen(3000);
