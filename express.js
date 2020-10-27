@@ -6,8 +6,8 @@ const app = express();
 var mysql = require("mysql");
 var connection = mysql.createConnection({
     host: "localhost",
-    user: "team4",
-    password: "team4",
+    user: "root",
+    password: "gjdmsquf!97",
     database: "team4",
   });
 connection.connect();
@@ -76,5 +76,10 @@ app.post('/login', function(req, res) {
         }
      });
 });
+
+app.get('/test', function(req, res){
+  res.status(200).sendFile(__dirname + "/test.html");
+});
+
 
 app.listen(3000);
