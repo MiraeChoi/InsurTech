@@ -44,6 +44,14 @@ app.get('/accountCheck', function(req,res){
 });
 
 
+app.get('/privacy', function(req, res) {
+    res.render('privacy');
+});
+
+app.get('/selling', function(req, res) {
+    res.render('selling');
+});
+
 app.post('/signup', function(req, res) {
     var username = req.body.username;
     var email = req.body.email;
