@@ -49,4 +49,35 @@ app.post('/signup', function(req, res) {
     console.log(req.body);
 })
 
+
+app.post('/login', function(req, res) {
+    console.log(req.body);
+
+    var email = req.body.email;
+    var password = req.body.password;
+
+    var userCheckSql = "SELECT * FROM user WHERE email=?"
+    connection.query(userCheckSql, [email], function (error, results, fields) {
+        if (error) throw error;
+        else {
+          if(results.length == 0) {
+              console.log("아이디나 비밀번호가 틀렸습니다.");
+              res.json(2);
+          }
+          else {
+              var storedPassword = results[0].password;
+              if(password == storedPassword) {
+                //로그인 성공
+                res.json(1);
+                console.log("로그인 성공");
+              }
+              else {
+                //로그인 실패
+                res.json(2);
+              }
+          }
+        }
+     });
+});
+
 app.listen(3000);
