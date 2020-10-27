@@ -14,12 +14,6 @@ var connection = mysql.createConnection({
   });
 connection.connect();
 
-// localStorage.setItem('item1', '10');
-// localStorage.setItem('item2', 'new item');
-// localStorage.setItem('item3', '0.543534');
-
-//sessionStorage.setItem("name", "null");
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
@@ -57,12 +51,29 @@ app.get('/register', function(req,res){
     res.render('register');
 });
 
+app.get('/result', function(req,res){
+    res.render('result');
+});
+
+app.get('/receipt', function(req,res){
+    res.render('receipt');
+});
+
+app.get('/accountCheck', function(req,res){
+    res.render('accountCheck');
+});
+
+
 app.get('/privacy', function(req, res) {
     res.render('privacy');
 });
 
 app.get('/selling', function(req, res) {
     res.render('selling');
+});
+
+app.get('/check', function(req, res) {
+    res.render('check');
 });
 
 app.post('/register', function(req, res) {
