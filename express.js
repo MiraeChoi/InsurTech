@@ -3,6 +3,7 @@ const request = require("request");
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const app = express();
+var jwt = require('jsonwebtoken');
 
 var mysql = require("mysql");
 var connection = mysql.createConnection({
@@ -12,6 +13,12 @@ var connection = mysql.createConnection({
     database: "team4",
   });
 connection.connect();
+
+// localStorage.setItem('item1', '10');
+// localStorage.setItem('item2', 'new item');
+// localStorage.setItem('item3', '0.543534');
+
+//sessionStorage.setItem("name", "null");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -24,13 +31,15 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-app.set('views',__dirname + '/views');
+app.set('views', __dirname + '/views');
 app.set('view engine','ejs');
 
 app.get('/index', function(req,res){
   if(!req.session.login){
     req.session.login = false
     req.session.idx = -1
+} else {
+    console.log(req.session);
 }
     res.render('index');
 });
@@ -46,6 +55,14 @@ app.get('/login', function(req,res){
 
 app.get('/register', function(req,res){
     res.render('register');
+});
+
+app.get('/privacy', function(req, res) {
+    res.render('privacy');
+});
+
+app.get('/selling', function(req, res) {
+    res.render('selling');
 });
 
 app.post('/register', function(req, res) {
@@ -82,22 +99,30 @@ app.post('/login', function(req, res) {
               res.json(2);
           }
           else {
-              var storedPassword = results[0].password;
-              if(password == storedPassword) {
-                //로그인 성공
-                res.json(1);
-                console.log("로그인 성공");
-                //세션 설정
-                req.session.login = true;
-                req.session.id = results[0].user_id;
-                req.session.email = req.body.email;
-                console.log("session.email : ", req.session.email);
-                res.redirect('/index');
-              }
-              else {
-                //로그인 실패
-                res.json(2);
-              }
+            var storedPassword = results[0].password;
+            if(password == storedPassword){
+              var tokenKey = "fintech1234!" // 토큰키 추가
+              jwt.sign(
+                {
+                  userId: results[0].id,
+                  userEmail: results[0].email,
+                },
+                tokenKey,
+                {
+                  expiresIn: "1d",
+                  issuer: "fintech.admin",
+                  subject: "user.login.info",
+                },
+                function (err, token) {
+                  console.log("로그인 성공", token);
+                  res.json(token);
+                }
+              );
+            }
+            else {
+              //로그인 불가
+              res.json(2);
+            }
           }
         }
      });

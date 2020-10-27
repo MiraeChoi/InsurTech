@@ -34,65 +34,65 @@
                     </ul>
                 </div>
             </div>
-		</nav>
-		<br><br><br>
-        <!-- Register Section-->
-        <section class="page-section" id="contact">
+        </nav>
+        <br>
+        <!-- Privacy Section-->
+        <section class="page-section portfolio" id="portfolio">
             <div class="container">
-                <!-- Register Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">회원가입</h2>
+                <!-- Privacy Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">개인정보 수집 및 이용 동의</h2>
                 <!-- Icon Divider-->
                 <div class="divider-custom">
                     <div class="divider-custom-line"></div>
                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
-                <!-- Register Section Form-->
+                <!-- Privacy Section Content-->
                 <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                        <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
-                        <form id="contactForm" name="sentMessage" novalidate="novalidate">
-                            <div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>이름</label>
-                                    <input class="form-control" id="name" type="text" placeholder="Name" required="required" data-validation-required-message="Please enter your name." />
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>Email Address</label>
-                                    <input class="form-control" id="email" type="email" placeholder="Email Address" required="required" data-validation-required-message="Please enter your email address." />
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>비밀번호</label>
-                                    <input class="form-control" id="password" type="password" placeholder="Password" required="required" data-validation-required-message="Please enter your password." />
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>은행</label>
-                                    <input class="form-control" id="bank" placeholder="Bank" required="required" data-validation-required-message="Please enter a bank."></input>
-                                    <p class="help-block text-danger"></p>
-                                </div>
-							</div>
-							<div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>계좌번호</label>
-                                    <input class="form-control" id="account" placeholder="Account" required="required" data-validation-required-message="Please enter a account number."></input>
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <br />
-							<div id="success"></div>
-							<br><br>
-                            <div class="form-group"><button class="btn btn-primary btn-xl" id="registerBtn" style="width : 100%;">회원가입</button></div>
-                        </form>
-                    </div>
+                    <div class="col-lg-4 ml-auto text-center"><p class="lead">고객님의 개인 정보를 통화 조회하고 관리하는 서비스에 이용합니다.</p></div>
+                    <div class="col-lg-4 mr-auto text-center"><p class="lead">이용자의 이름, 이메일, 은행 및 계좌번호 4개의 일반 개인정보, 3개의 접속 이력 정보</p></div>
+                </div>
+                <div class="text-center mt-4" style="width: 100%;">
+                    <a class="btn btn-xl btn-outline-dark" href="register">
+                        상세 내용
+                    </a>
+                </div>
+                <br><br>
+                <!-- Privacy Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">개인정보 제3자 제공 동의</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- Privacy Section Content-->
+                <div class="row">
+                    <div class="col-lg-4 ml-auto text-center"><p class="lead">의료 및 건강 정보 기반 등급 평가 서비스에 이용합니다.</p></div>
+                    <div class="col-lg-4 mr-auto text-center"><p class="lead">건강 검진 내역 및 결과 항목</p></div>
+                </div>
+                <div class="text-center mt-4" style="width: 100%;">
+                    <a class="btn btn-xl btn-outline-dark" href="register">
+                        상세 내용
+                    </a>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-lg-8 ml-auto text-center"><p class="lead">개인정보수집 및 활용과 개인정보 제 3자 제공에 동의하십니까?      </p></div>
+                </div>
+                <div class="col-lg-4 ml-auto custom-control custom-radio text-center">
+                    <input type="radio" class="custom-control-input" id="defaultUnchecked" name="defaultExampleRadios">
+                    <label class="custom-control-label" for="defaultUnchecked">예</label>
+                </div>
+                <div class="col-lg-4 mr-auto custom-control custom-radio text-center">
+                    <input type="radio" class="custom-control-input" id="defaultChecked" name="defaultExampleRadios" checked>
+                    <label class="custom-control-label" for="defaultChecked">아니오</label>
+                </div>
+                <!-- Privacy Section Button-->
+                <div class="text-center mt-4">
+                    <a class="btn btn-xl btn-primary" style="width: 100%;" href="register">
+                        다음으로
+                    </a>
                 </div>
             </div>
         </section>
@@ -142,35 +142,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
         <!-- Contact form JS-->
         <script src="assets/mail/jqBootstrapValidation.js"></script>
+        <script src="assets/mail/contact_me.js"></script>
         <!-- Core theme JS-->
-		<script src="js/scripts.js"></script>
-	<script>
-		$("#registerBtn").click(function () {
-		var username = $("#username").val();
-		var email = $("#email").val();
-		var password = $("#password").val();
-		var bank = $("#bank").val();
-		var account = $("#account").val();
-	
-		$.ajax({
-				url:'/register',
-				type : 'POST',
-				data : {
-					username: username,
-					email: email,
-					password: password,
-					bank: bank,
-					account: account
-				},
-				success:function(responseData){
-				  if(responseData == "1"){
-					alert("가입 완료");
-					//로그인 화면으로 넘어가면 좋을 것 같아요. - 미래
-				  }
-				}
-			})  
-	  });
-	</script>
-</body>
-
+        <script src="js/scripts.js"></script>
+    </body>
 </html>

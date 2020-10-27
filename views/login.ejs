@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Freelancer - Start Bootstrap Theme</title>
+    <title>로그인</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
@@ -139,9 +139,10 @@
                 console.log("로그인 실패");
               }
               else {
-                alert("로그인 성공");
-                console.log("로그인 성공");
-                //window.location.href="/main";
+                console.log('로그인 성공', data);
+                sessionStorage.setItem('email', userEmail);
+				sessionStorage.setItem('ourToken', data);
+				window.location.href = "/index";
               }
           },
         });

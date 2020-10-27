@@ -34,65 +34,90 @@
                     </ul>
                 </div>
             </div>
-		</nav>
-		<br><br><br>
-        <!-- Register Section-->
-        <section class="page-section" id="contact">
+        </nav>
+        <br>
+        <!-- Privacy Section-->
+        <section class="page-section portfolio" id="portfolio">
             <div class="container">
-                <!-- Register Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">회원가입</h2>
+                <!-- Privacy Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">건강보험료 데이터</h2>
                 <!-- Icon Divider-->
                 <div class="divider-custom">
                     <div class="divider-custom-line"></div>
                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
-                <!-- Register Section Form-->
+                <!-- Privacy Section Content-->
                 <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                        <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
-                        <form id="contactForm" name="sentMessage" novalidate="novalidate">
-                            <div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>이름</label>
-                                    <input class="form-control" id="name" type="text" placeholder="Name" required="required" data-validation-required-message="Please enter your name." />
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>Email Address</label>
-                                    <input class="form-control" id="email" type="email" placeholder="Email Address" required="required" data-validation-required-message="Please enter your email address." />
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>비밀번호</label>
-                                    <input class="form-control" id="password" type="password" placeholder="Password" required="required" data-validation-required-message="Please enter your password." />
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>은행</label>
-                                    <input class="form-control" id="bank" placeholder="Bank" required="required" data-validation-required-message="Please enter a bank."></input>
-                                    <p class="help-block text-danger"></p>
-                                </div>
-							</div>
-							<div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>계좌번호</label>
-                                    <input class="form-control" id="account" placeholder="Account" required="required" data-validation-required-message="Please enter a account number."></input>
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                            </div>
-                            <br />
-							<div id="success"></div>
-							<br><br>
-                            <div class="form-group"><button class="btn btn-primary btn-xl" id="registerBtn" style="width : 100%;">회원가입</button></div>
-                        </form>
-                    </div>
+                    <div class="col-lg-4 ml-auto text-center"><p class="lead">설명</p></div>
+                    <div class="col-lg-4 mr-auto text-center"><p class="lead">항목</p></div>
+                </div>
+                <div class="text-center mt-4" style="width: 100%;">
+                    <a class="btn btn-xl btn-outline-dark">
+                        상세 내용
+                    </a>
+                </div>
+                <br>
+                <div class="custom-control custom-checkbox text-center mt-4">
+                    <input type="checkbox" id="checkbox1" class="custom-control-input">
+                    <label class="custom-control-label" for="checkbox1" name="insurance-data">건강보험료 데이터 판매하기</label>
+                </div>
+                <br><br>
+                <!-- Privacy Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">약국 이용 이력 데이터</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- Privacy Section Content-->
+                <div class="row">
+                    <div class="col-lg-4 ml-auto text-center"><p class="lead">설명</p></div>
+                    <div class="col-lg-4 mr-auto text-center"><p class="lead">항목</p></div>
+                </div>
+                <div class="text-center mt-4" style="width: 100%;">
+                    <a class="btn btn-xl btn-outline-dark">
+                        상세 내용
+                    </a>
+                </div>
+                <br>
+                <div class="custom-control custom-checkbox text-center mt-4">
+                    <input type="checkbox" id="checkbox2" class="custom-control-input">
+                    <label class="custom-control-label" for="checkbox2" name="drug-data">약국 이용 이력 데이터 판매하기</label>
+                </div>
+                <br><br>
+                <!-- Privacy Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">건강 검진 내역 데이터</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- Privacy Section Content-->
+                <div class="row">
+                    <div class="col-lg-4 ml-auto text-center"><p class="lead">설명</p></div>
+                    <div class="col-lg-4 mr-auto text-center"><p class="lead">항목</p></div>
+                    <div class="col-lg-4 mr-auto text-center"><p class="lead">가격</p></div>
+                    <div class="col-lg-4 mr-auto text-center"><p class="lead">제공 기관 및 기업</p></div>
+                </div>
+                <div class="text-center mt-4" style="width: 100%;">
+                    <a class="btn btn-xl btn-outline-dark">
+                        상세 내용
+                    </a>
+                </div>
+                <br>
+                <div class="custom-control custom-checkbox text-center mt-4">
+                    <input type="checkbox" id="checkbox3" class="custom-control-input">
+                    <label class="custom-control-label" for="checkbox3" name='health-data'>건강 검진 내역 데이터 판매하기</label>
+                </div>
+                <br>
+                <!-- Privacy Section Button-->
+                <div class="text-center mt-4">
+                    <a class="btn btn-xl btn-primary" style="width: 100%;" href="result">
+                        다음으로
+                    </a>
                 </div>
             </div>
         </section>
@@ -142,35 +167,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
         <!-- Contact form JS-->
         <script src="assets/mail/jqBootstrapValidation.js"></script>
+        <script src="assets/mail/contact_me.js"></script>
         <!-- Core theme JS-->
-		<script src="js/scripts.js"></script>
-	<script>
-		$("#registerBtn").click(function () {
-		var username = $("#username").val();
-		var email = $("#email").val();
-		var password = $("#password").val();
-		var bank = $("#bank").val();
-		var account = $("#account").val();
-	
-		$.ajax({
-				url:'/register',
-				type : 'POST',
-				data : {
-					username: username,
-					email: email,
-					password: password,
-					bank: bank,
-					account: account
-				},
-				success:function(responseData){
-				  if(responseData == "1"){
-					alert("가입 완료");
-					//로그인 화면으로 넘어가면 좋을 것 같아요. - 미래
-				  }
-				}
-			})  
-	  });
-	</script>
-</body>
-
+        <script src="js/scripts.js"></script>
+    </body>
 </html>
