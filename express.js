@@ -52,6 +52,11 @@ app.get('/selling', function(req, res) {
     res.render('selling');
 });
 
+app.get('/check', function(req, res) {
+    res.render('check');
+});
+
+
 app.post('/signup', function(req, res) {
     var username = req.body.username;
     var email = req.body.email;
