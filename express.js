@@ -4,6 +4,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const app = express();
 var jwt = require('jsonwebtoken');
+var auth = require('./lib/auth');
 
 var mysql = require("mysql");
 var connection = mysql.createConnection({
@@ -28,6 +29,9 @@ app.use(session({
 app.set('views', __dirname + '/views');
 app.set('view engine','ejs');
 
+app.get('/', function(req, res) {
+    res.render('index');
+})
 app.get('/index', function(req,res){
   if(!req.session.login){
     req.session.login = false
@@ -63,7 +67,6 @@ app.get('/accountCheck', function(req,res){
     res.render('accountCheck');
 });
 
-
 app.get('/privacy', function(req, res) {
     res.render('privacy');
 });
@@ -75,6 +78,12 @@ app.get('/selling', function(req, res) {
 app.get('/check', function(req, res) {
     res.render('check');
 });
+
+app.get('/authTest', auth ,function(req, res){
+  console.log(req.decoded);
+  //토큰에 있는 데이터 확인
+  res.json("로그인 성공! / 컨텐츠를 볼 수 있습니다.")
+})
 
 app.post('/register', function(req, res) {
     var username = req.body.username;
