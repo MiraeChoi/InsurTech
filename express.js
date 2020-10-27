@@ -3,32 +3,45 @@ const request = require("request");
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const app = express();
-<<<<<<< HEAD
-// const { exec } = require('child_process');
 
-// exec('Main.py', function(err, stdout, stderr){
-//   console.log(stdout);
-// });
-//python shell 연결 설정
-const { PythonShell } = require('python-shell');
-var options = {
-  mode: 'text',
-  pythonPath: '',
-  pythonOptions: ['-u'],
-  scriptPath: '',
-  args: ['value1', 'value2', 'value3']
-};
+let DrugrunPy = new Promise(function(success, nosuccess) {
 
+  const { spawn } = require('child_process');
+  const pyprog = spawn('python', ['./Drug.py']);
+  pyprog.stdout.on('data', function(data){
+    success(data);
+  });
+  pyprog.stderr.on('data', (data)=> {
+    nosuccess(data);
+  });
+});
 
-PythonShell.run('Main.py', options, function(err, results){
-  if(err) throw err;
+let PayrunPy = new Promise(function(success, nosuccess) {
 
-  console.log('results: %j', results);
-})
-=======
+  const { spawn } = require('child_process');
+  const pyprog = spawn('python', ['./Pay.py']);
+  pyprog.stdout.on('data', function(data){
+    success(data);
+  });
+  pyprog.stderr.on('data', (data)=> {
+    nosuccess(data);
+  });
+});
+
+let InspectionrunPy = new Promise(function(success, nosuccess) {
+
+  const { spawn } = require('child_process');
+  const pyprog = spawn('python', ['./Inspection.py']);
+  pyprog.stdout.on('data', function(data){
+    success(data);
+  });
+  pyprog.stderr.on('data', (data)=> {
+    nosuccess(data);
+  });
+});
+
 var jwt = require('jsonwebtoken');
 var auth = require('./lib/auth');
->>>>>>> 9aa323cd558bb83c162976c0208ff0eee39c61ff
 
 var mysql = require("mysql");
 var connection = mysql.createConnection({
@@ -52,6 +65,30 @@ app.use(session({
 
 app.set('views', __dirname + '/views');
 app.set('view engine','ejs');
+////////////////////////////////////////////////////
+app.get('/pay', (req, res)=>{
+  PayrunPy.then(function(fromPayRunpy){
+    res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});
+    console.log(fromPayRunpy);
+    res.end(fromPayRunpy);
+  });
+})
+
+app.get('/drug', (req, res)=>{
+  DrugrunPy.then(function(fromDrugRunpy){
+    res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});
+    console.log(fromDrugRunpy);
+    res.end(fromDrugRunpy);
+  });
+})
+
+app.get('/inspection', (req, res)=>{
+  InspectionrunPy.then(function(fromInspectionRunpy){
+    res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});
+    console.log(fromInspectionRunpy);
+    res.end(fromInspectionRunpy);
+  });
+})
 
 app.get('/', function(req, res) {
     res.render('index');
@@ -79,9 +116,11 @@ app.get('/register', function(req,res){
     res.render('register');
 });
 
-app.get('/result', function(req,res){
-    res.render('result');
-});
+// app.get('/result', function(req,res){
+//     res.render('result');
+// });
+
+
 
 app.get('/receipt', function(req,res){
     res.render('receipt');
