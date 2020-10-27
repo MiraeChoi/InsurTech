@@ -1,13 +1,14 @@
-const express=require('express');
-const app=express();
-
+const express = require('express');
 const request = require("request");
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const app = express();
 
 var mysql = require("mysql");
 var connection = mysql.createConnection({
     host: "localhost",
-    user: "root",
-    password: "",
+    user: "team4",
+    password: "team4",
     database: "team4",
   });
 connection.connect();
@@ -15,22 +16,39 @@ connection.connect();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
+//login session settings
+app.use(cookieParser());
+app.use(session({
+	secret: 'keyboard cat',
+	resave: false,
+	saveUninitialized: true
+}));
 
 app.set('views',__dirname + '/views');
 app.set('view engine','ejs');
 
 app.get('/index', function(req,res){
+  if(!req.session.login){
+    req.session.login = false
+    req.session.idx = -1
+}
     res.render('index');
 });
+
 app.get('/login', function(req,res){
-    res.render('login');
+    //res.render('login');
+    let session = req.session;
+
+    res.render('login', {
+        session : session
+    });
 });
 
 app.get('/register', function(req,res){
     res.render('register');
 });
 
-app.post('/signup', function(req, res) {
+app.post('/register', function(req, res) {
     var username = req.body.username;
     var email = req.body.email;
     var password = req.body.password;
@@ -69,6 +87,12 @@ app.post('/login', function(req, res) {
                 //로그인 성공
                 res.json(1);
                 console.log("로그인 성공");
+                //세션 설정
+                req.session.login = true;
+                req.session.id = results[0].user_id;
+                req.session.email = req.body.email;
+                console.log("session.email : ", req.session.email);
+                res.redirect('/index');
               }
               else {
                 //로그인 실패
@@ -78,6 +102,5 @@ app.post('/login', function(req, res) {
         }
      });
 });
-
 
 app.listen(3000);
