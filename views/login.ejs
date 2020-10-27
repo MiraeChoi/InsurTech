@@ -1,65 +1,60 @@
 <!DOCTYPE html>
-<html>
-<head>
-<title>로그인</title>
-  <!-- Style Sheet -->
-  <!--<link rel="stylesheet" type="text/css" href="login.css" />-->
-  <script type="text/html" src="login.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" />
-  <script type="text/css" src="https://fonts.googleapis.com/icon?family=Material+Icons"></script>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
-</head>
-<body>
-	<div id="login-page" class="row">
-    <div class="col s12 z-depth-4 card-panel">
-      <!--<form class="login-form">-->
-        <div class="row">
-          <div class="input-field col s12 center">
-            <!-- <img src="images/login-logo.png" alt="" class="circle responsive-img valign profile-image-login"/> -->
-            <p class="center login-form-text">로그인</p>
+<html lang="en">
+  <head>
+    <%- include('head.ejs') %>
+  </head>
+    <body id="page-top">
+      <%- include('navigation.ejs') %>
+        <br><br><br>
+        <!-- Contact Section-->
+        <section class="page-section" id="contact">
+          <div class="container">
+              <!-- Contact Section Heading-->
+              <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">로그인</h2>
+              <!-- Icon Divider-->
+              <div class="divider-custom">
+                  <div class="divider-custom-line"></div>
+                  <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                  <div class="divider-custom-line"></div>
+              </div>
+              <!-- Contact Section Form-->
+              <div class="row">
+                  <div class="col-lg-8 mx-auto">
+                      <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
+                      <form id="contactForm" name="sentMessage" novalidate="novalidate">
+                          <div class="control-group">
+                              <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                                  <label>Email</label>
+                                  <input class="form-control" id="email" type="email" placeholder="Email" required="required" data-validation-required-message="Please enter your email address." />
+                                  <p class="help-block text-danger"></p>
+                              </div>
+                          </div>
+                          <div class="control-group">
+                            <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                                <label>Password</label>
+                                <input class="form-control" id="password" type="password" placeholder="Password" required="required" data-validation-required-message="Please enter your password." />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                          <br><br>
+                          <div id="success"></div>
+                          <div class="form-group"><button class="btn btn-primary btn-xl" id="loginBtn" type="submit" style="width:100%;">로그인</button></div>
+                      </form>
+                  </div>
+              </div>
           </div>
-        </div>
-        <div class="row margin">
-          <div class="input-field col s12">
-            <!-- <i class="mdi-social-person-outline prefix"></i> -->
-            <input id="email" name="email" type="text" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=&quot;); cursor: auto;"/>
-            <label for="email" data-error="wrong" class="center-align" data-success="right">이메일</label>            
-          </div>
-        </div>
-        <div class="row margin">
-          <div class="input-field col s12">
-            <!-- <i class="mdi-action-lock-outline prefix"></i> -->
-            <input id="password" name="password" type="password" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=&quot;);"/>
-            <label for="password">비밀번호</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <button id="loginBtn" class="btn waves-effect waves-light col s12">로그인</button>
-          </div>
-          <div class="input-field col s12">
-            <a href="register" class="btn waves-effect waves-light col s12 light-blue darken-4">회원가입</a>
-          </div>
-        </div>
-        
-        <div class="row">
-          <div class="input-field col s6 m6 l6">
-            <p class="margin medium-small"><a href="page-register.html">Register Now!</a></p>
-          </div>
-          <div class="input-field col s6 m6 l6">
-              <p class="margin right-align medium-small"><a href="page-forgot-password.html">Forgot password ?</a></p>
-          </div>          
-        </div>
-      <!--</form>-->
-    </div>
-  </div>
-  <!-- JQuery library file. requared all pages -->
-	<script src="js/jquery-3.2.1.min.js"></script>
-	<!-- Template global script file. requared all pages -->
-	<script src="js/global.script.js"></script>
-  <script>
+      </section>
+      <%- include('footer.ejs') %>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <!-- Contact form JS-->
+        <script src="assets/mail/jqBootstrapValidation.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <script>
 	$("#loginBtn").click(function(){
         var email = $("#email").val();
         var password = $("#password").val();
@@ -77,12 +72,14 @@
               }
               else {
                 alert("로그인 성공");
-                console.log("로그인 성공");
-                //window.location.href="/main";
+                console.log('로그인 성공', data);
+                window.location.href = "/index";
+                sessionStorage.setItem('email', email);
+                sessionStorage.setItem('ourToken', data);
               }
           },
         });
     });
     </script>
-</body>
+  </body>
 </html>
