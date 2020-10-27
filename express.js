@@ -1,6 +1,27 @@
 const express = require('express');
 const request = require("request");
 const app = express();
+// const { exec } = require('child_process');
+
+// exec('Main.py', function(err, stdout, stderr){
+//   console.log(stdout);
+// });
+//python shell 연결 설정
+const { PythonShell } = require('python-shell');
+var options = {
+  mode: 'text',
+  pythonPath: '',
+  pythonOptions: ['-u'],
+  scriptPath: '',
+  args: ['value1', 'value2', 'value3']
+};
+
+
+PythonShell.run('Main.py', options, function(err, results){
+  if(err) throw err;
+
+  console.log('results: %j', results);
+})
 
 //database 연결 설정
 var mysql = require("mysql");
@@ -75,10 +96,6 @@ app.post('/login', function(req, res) {
           }
         }
      });
-});
-
-app.get('/test', function(req, res){
-  res.status(200).sendFile(__dirname + "/test.html");
 });
 
 

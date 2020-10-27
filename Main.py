@@ -9,12 +9,14 @@ import os, json, base64
 from flask import Flask
 from flask import request
 from flask_cors import CORS
+import sys    
+sys.stdout.reconfigure(encoding='utf-8')
 
 class Results():
     def result():
 
         #변수 세팅
-        API_KEY					= "a2f26fde99444267acc81bbf2ea56068   "							
+        API_KEY					= "bc732587dcce4d28a538e33c43ede40b"							
         IDENTITY_NUMBER			= "9103051245711"						#주민등록번호
         CERT_PASSWORD			= "zhdkffk1!!"							#인증서 비밀번호
         PHONE_NUMBER			= "01023408391"							#핸드폰 번호
@@ -42,21 +44,19 @@ class Results():
 
         #건강보험료 납부 내역 조회
         paymentResult			= apiHelper.getPaymentList(aesCipheredKey, _certFilePath, _keyFilePath, IDENTITY_NUMBER, CERT_PASSWORD, '2010', "01", "02")
-        myPaymentResults = format(json.loads(paymentResult))
+        myPaymentResults = json.loads(paymentResult)
         
 
         #내가 먹는 약 조회
         myDrugResult			= apiHelper.getMYDrug(aesCipheredKey, _certFilePath, _keyFilePath, IDENTITY_NUMBER, CERT_PASSWORD, PHONE_NUMBER)
-        myDrugResults = format(json.loads(myDrugResult))
+        myDrugResults = json.loads(myDrugResult)
 
             
         #진단받은 질환 조회
         myInspection 			= apiHelper.getMYInspection(aesCipheredKey, _certFilePath, _keyFilePath, IDENTITY_NUMBER, CERT_PASSWORD, PHONE_NUMBER)
-        myInspectionResults = format(json.loads(myInspection))
+        myInspectionResults = json.loads(myInspection)
 
-    
-
-        return (myInspectionResults)
-        #myPaymentResults, myInspectionResults 
+        print(myPaymentResults, myDrugResults, myInspectionResults)
 
 
+Results.result()
