@@ -3,7 +3,7 @@ const app=express();
 
 const request = require("request");
 
-var mysql = require("mysql");
+/*var mysql = require("mysql");
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -12,7 +12,7 @@ var connection = mysql.createConnection({
 });
 
 connection.connect();
-
+*/
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
@@ -30,6 +30,19 @@ app.get('/login', function(req,res){
 app.get('/register', function(req,res){
     res.render('register');
 });
+
+app.get('/result', function(req,res){
+    res.render('result');
+});
+
+app.get('/receipt', function(req,res){
+    res.render('receipt');
+});
+
+app.get('/accountCheck', function(req,res){
+    res.render('accountCheck');
+});
+
 
 app.get('/privacy', function(req, res) {
     res.render('privacy');
