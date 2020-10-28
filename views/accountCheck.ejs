@@ -17,6 +17,8 @@
                   <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                   <div class="divider-custom-line"></div>
               </div>
+
+              <h1 id="balanceAmount" class="text-center"></h1>
               <!-- Contact Section Form-->
               <div class="row">
                   <div class="col-lg-8 mx-auto">
@@ -64,43 +66,66 @@
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
         <script>
-          var jwtToken = sessionStorage.getItem("ourToken");
-      fetchUserData();
-      function fetchUserData() {
-        $.ajax({
-          url: "/list",
-          type: "POST",
-          headers: {
-            ourtoken: jwtToken,
-          },
-          success: function (data) {
-            console.log(data.res_list);
-            for (var i = 0; i < 1; i++) {
-              $("#cardList").append(
-                '<div class="balance-card mb-15">' +
-                  '<div class="d-flex align-items-center">' +
-                  '<div class="d-flex flex-grow">' +
-                  '<div class="mr-auto">' +
-                  '<h1 class="b-val">' +
-                  data.res_list[i].account_alias +
-                  "</h1>" +
-                  '<p class="g-text mb-10">' +
-                  data.res_list[i].fintech_use_num +
-                  "</p>" +
-                  "</div>" +
-                  '<div class="ml-auto align-self-end">' +
-                  '<a href="/balance?fin_use_num=' +
-                  data.res_list[i].fintech_use_num +
-                  '">잔액조회</a>' +
-                  "</div>" +
-                  "</div>" +
-                  "</div>" +
-                  "</div>"
-              );
-            }
-          },
-        });
+          function getQueryStringObject() {
+        var a = window.location.search.substr(1).split("&");
+        if (a == "") return {};
+        var b = {};
+        for (var i = 0; i < a.length; ++i) {
+          var p = a[i].split("=", 2);
+          if (p.length == 1) b[p[0]] = "";
+          else b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return b;
       }
+      var qs = getQueryStringObject();
+      var jwtToken = sessionStorage.getItem("ourToken");
+      console.log(qs, jwtToken);
+      $.ajax({
+        url: "/balance",
+        type: "POST",
+        headers: {
+          ourtoken: jwtToken,
+        },
+        //accessToken 아님!!!!!
+        data: {
+          fin_use_num: qs.fin_use_num,
+        },
+        //req.body.fin_use_num 추가해서 보내기
+        success: function (data) {
+          console.log("해당 계좌의 잔액은 :", data.balance_amt);
+          $("#balanceAmount").text(numberFormat(data.balance_amt) + "원");
+        },
+      });
+      function numberFormat(inputNumber) {
+        return inputNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+      $.ajax({
+        url: "/transactionlist",
+        type: "POST",
+        headers: {
+          ourtoken: jwtToken,
+        },
+        data: {
+          fin_use_num: qs.fin_use_num,
+        },
+        success: function (data) {
+          console.log(data);
+          for (var i = 0; i < data.res_list.length; i++) {
+            var element = data.res_list[i];
+            $("#transactionList").append(
+              "<tr><td>" +
+                (i + 1) +
+                "</td><td>" +
+                element.inout_type +
+                "</td><td>" +
+                element.print_content +
+                "</td><td>" +
+                element.tran_amt +
+                "</td></tr>"
+            );
+          }
+        },
+      });
         </script>
   </body>
 </html>
