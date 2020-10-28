@@ -30,13 +30,13 @@
                           <br><br>
                           <div id="sale"></div>
                           <div class="form-group">
-                            <a href="receipt" onclick="return confirm('2000원이 적립되었습니다.')" class="btn btn-primary btn-xl" id="saleBtn" type="submit" style="width:100%;">판매하기</a>
+                            <a href="check" onclick="return confirm('2000원이 적립되었습니다.')" class="btn btn-primary btn-xl" id="saleBtn" type="submit" style="width:100%;" >판매하기</a>
                             
                         </div>
                           
                           <div id="down"></div>
                           <div class="form-group">
-                            <button class="btn btn-primary btn-xl" id="downBtn" type="submit" style="width:100%;">내려받기</button>
+                            <button class="btn btn-primary btn-xl" type="button" id="downBtn" style="width:100%;">내려받기</button>
                         </div>
                       </form>
                   </div>
@@ -53,7 +53,11 @@
         <script src="assets/mail/jqBootstrapValidation.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
-        <!-- Download PDF -->
+
+        <script src="js/html2canvas.js"></script>
+        <script src="js/jspdf.min.js"></script>
+
+>>>>>>> 83554f40aa160121f66fab7f478a0404c985bea9
         <script>
 
             function myFunction() {
@@ -69,6 +73,7 @@
                 data : {
                 },
                 success:function(data){
+                  console.log(data);
                   $("#resultDiv").html(
                     "<table border=3 bordercolor=black width=500 height=300 align=center>"+
                       "<tr align=center><td><strong>항목</td><td><strong>상세내역</strong></td></tr>"+
@@ -78,13 +83,55 @@
                       "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[1].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[1].Value+"</td></tr>"+
                       "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[2].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[2].Value+"</td></tr>"+
                       "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[3].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[3].Value+"</td></tr>"+
-                    "</table>"
+                      "<tr align=center><td>"+data.Inspections[0].Illnesses[1].Items[0].Name+"</td><td>"+data.Inspections[0].Illnesses[1].Items[0].Value+"</td></tr>"+
+                      "<tr align=center><td>"+data.Inspections[0].Illnesses[2].Items[0].Name+"</td><td>"+data.Inspections[0].Illnesses[2].Items[0].Value+"</td></tr>"+
+                      "<tr align=center><td>"+data.Inspections[0].Illnesses[3].Items[0].Name+"</td><td>"+data.Inspections[0].Illnesses[3].Items[0].Value+"</td></tr>"+
+
+  
+                      "</table>"
                   )
 
                 }
             })       
 
-          </script>
+            </script>
 
+                }
+            })
+          </script>
+          
+          <script>
+            $(document).ready(function() {
+              $('#downBtn').click(function() { //pdf저장 button id
+                  html2canvas($('#resultDiv')[0]).then(function(canvas) { //저장 영역 div id
+                  
+                  //캔버스를 이미지로 변환
+                  var imgData = canvas.toDataURL('image/png');
+                     
+                  var imgWidth = 190; //이미지 가로 길이(mm) / A4 기준 210mm
+                  var pageHeight = imgWidth * 1.414;  //출력 페이지 세로 길이 계산 A4 기준
+                  var imgHeight = canvas.height * imgWidth / canvas.width;
+                  var heightLeft = imgHeight;
+                  var margin = 10; //출력 페이지 여백설정
+                  var doc = new jsPDF('p', 'mm');
+                  var position = 0;
+                     
+                  //첫 페이지 출력
+                  doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+                  heightLeft -= pageHeight;
+                       
+                  //한 페이지 이상일 경우 루프 돌면서 출력
+                  while (heightLeft >= 20) {
+                      position = heightLeft - imgHeight;
+                      doc.addPage();
+                      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                      heightLeft -= pageHeight;
+                  }
+                  //파일 저장
+                  doc.save('mydata.pdf');
+                });
+              }); 
+            })
+          </script>
   </body>
 </html>
