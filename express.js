@@ -118,6 +118,11 @@ app.get('/result2', function(req,res){
     res.render('result2');
 });
 
+app.get('/result', function(req,res){
+  res.render('result');
+});
+
+
 app.get('/result3', function(req,res){
   res.render('result3');
 });
