@@ -53,25 +53,25 @@
               <div class="row">
                   <div class="col-lg-8 mx-auto">
                       <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
-                      <form id="contactForm" name="sentMessage" novalidate="novalidate">
+                      <form id="contactForm" name="sentMessage" action="/result" method="POST" novalidate="novalidate">
                           <div id="sale"></div>
                           <div class="form-group " style="text-align:left">
-                            <label><input type="checkbox" name="institution" value="서울대학교 병원" >서울대학교 병원</label>
+                            <label><input type="checkbox" id="ins1" name="institution1" value="서울대학교 병원">서울대학교 병원</label>
                             <br>
-                            <label><input type="checkbox" name="institution" value="세브란스병원">세브란스병원</label>
+                            <label><input type="checkbox" id="ins2" name="institution2" value="세브란스병원">세브란스병원</label>
                             <br>
-                            <label><input type="checkbox" name="institution" value="서울삼성병원">서울삼성병원</label>
+                            <label><input type="checkbox" id="ins3" name="institution3" value="서울삼성병원">서울삼성병원</label>
                             <br>
-                            <label><input type="checkbox" name="institution" value="삼성 바이오로직스">삼성 바이오로직스</label>
+                            <label><input type="checkbox" id="ins4" name="institution4" value="삼성 바이오로직스">삼성 바이오로직스</label>
                             <br>
-                            <label><input type="checkbox" name="institution" value="셀트리온">셀트리온</label>
+                            <label><input type="checkbox" id="ins5" name="institution5" value="셀트리온">셀트리온</label>
                             <br>
-                            <label><input type="checkbox" name="institution" value="sk 바이오팜">sk 바이오팜</label>
+                            <label><input type="checkbox" id="ins6" name="institution6" value="sk 바이오팜">sk 바이오팜</label>
                         </div>
                           
                           <div id="down"></div>
                           <div class="form-group">
-                            <a class="btn btn-xl btn-primary" style="width: 100%;" href="result">
+                            <a class="btn btn-xl btn-primary" style="width: 100%;" href="#" onclick="send();">
                                 결과보기
                             </a>
                         </div>
@@ -80,6 +80,49 @@
               </div>
           </div>
       </section>
+
+      <script>
+          function send() {
+            var user_id = sessionStorage.getItem('id');
+            var ins1Res = document.getElementById("ins1").checked;
+            var ins2Res = document.getElementById("ins2").checked;
+            var ins3Res = document.getElementById("ins3").checked;
+            var ins4Res = document.getElementById("ins4").checked;
+            var ins5Res = document.getElementById("ins5").checked;
+            var ins6Res = document.getElementById("ins6").checked;
+
+            for(var i = 1; i <= 6; i++) {
+                var insName = "ins" + i + "Res";
+
+                if(insName) {
+                    insName = 1;
+                } else {
+                    insName = 0;
+                }
+            }
+            alert(ins2Res);
+            
+            $.ajax({
+				url:'/result',
+				type : 'POST',
+				data : {
+                    userId: user_id,
+                    ins1: ins1Res,
+                    ins2: ins2Res,
+                    ins3: ins3Res,
+                    ins4: ins4Res,
+                    ins5: ins5Res,
+                    ins6: ins6Res
+				},
+				success:function(responseData){
+				  if(responseData == "1"){
+					window.location.href = "/result";
+				  }
+				}
+			})
+          }
+      </script>
+
       <!-- Footer-->
       <footer class="footer text-center">
         <div class="container">
