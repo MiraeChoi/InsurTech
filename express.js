@@ -2,42 +2,41 @@ const express = require('express');
 const request = require("request");
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const sampleApiData = require('./sample.json');
 const app = express();
-var jwt = require('jsonwebtoken');
-const sampleApiData = require('./sample.json')
 
 var jwt = require('jsonwebtoken');
 var auth = require('./lib/auth');
 
 var mysql = require("mysql");
 var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "dlthdus0518",
+    host: "172.30.1.21",
+    user: "team4",
+    password: "team4",
     database: "team4",
 });
 connection.connect();
 
-let DrugrunPy = new Promise(function(success, nosuccess) {
-    const { spawn } = require('child_process');
-    const pyprog = spawn('python', ['./Pay.py']);
-    pyprog.stdout.on('data', function(data){
-        success(data);
-    });
-    pyprog.stderr.on('data', (data)=> {
-        nosuccess(data);
-    });
+let PayrunPy = new Promise(function(success, nosuccess) {
+  const { spawn } = require('child_process');
+  const pyprog = spawn('python', ['./Drug.py']);
+  pyprog.stdout.on('data', function(data){
+    success(data);
+  });
+  pyprog.stderr.on('data', (data)=> {
+    nosuccess(data);
+  });
 });
 
 let InspectionrunPy = new Promise(function(success, nosuccess) {
-    const { spawn } = require('child_process');
-    const pyprog = spawn('python', ['./Inspection.py']);
-    pyprog.stdout.on('data', function(data){
-        success(data);
-    });
-    pyprog.stderr.on('data', (data)=> {
-        nosuccess(data);
-    });
+  const { spawn } = require('child_process');
+  const pyprog = spawn('python', ['./Inspection.py']);
+  pyprog.stdout.on('data', function(data){
+    success(data);
+  });
+  pyprog.stderr.on('data', (data)=> {
+    nosuccess(data);
+  });
 });
 
 app.use(express.json());
@@ -70,12 +69,10 @@ app.get('/drug', (req, res)=>{
   });
 })
 
-
 app.get('/inspection', (req, res)=>{
-
   // InspectionrunPy.then(function(fromInspectionRunpy){
-  //   res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});
-  //   console.log(fromInspectionRunpy);
+  // res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});
+  // console.log(fromInspectionRunpy);
   // res.end(fromInspectionRunpy);
   res.json(sampleApiData)
   })
