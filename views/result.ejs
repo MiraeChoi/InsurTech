@@ -24,7 +24,7 @@
                       <form id="contactForm" name="sentMessage" novalidate="novalidate">
                           <div class="control-group">
                               <div class="form-group floating-label-form-group controls mb-0 pb-2"  style="border:1px solid; padding:10px;border-width: medium;">
-                                안녕하세요 
+                                <div id="resultDiv"></div> 
                               </div>
                           </div>
                           <br><br>
@@ -36,7 +36,7 @@
                           
                           <div id="down"></div>
                           <div class="form-group">
-                            <button class="btn btn-primary btn-xl" id="downBtn" type="submit" style="width:100%;">내려받기</button>
+                            <button class="btn btn-primary btn-xl" type="button" id="downBtn" style="width:100%;">내려받기</button>
                         </div>
                       </form>
                   </div>
@@ -54,15 +54,71 @@
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
         <!-- Download PDF -->
+        <script src="js/html2canvas.js"></script>
+        <script src="js/jspdf.min.js"></script>
+
         <script>
             function myFunction() {
                 var result=confirm("2000원이 입금되었습니다.");
                 if(result){
                     location.href="receipt";
                 }    
-
+                //ajax 요청
             }
-            </script>
+            $.ajax({
+                url:'http://localhost:3000/inspection',
+                type : 'GET',
+                data : {
+                },
+                success:function(data){
+                  $("#resultDiv").html(
+                    "<table>"+
+                      "<tr><td>항목</td><td>상세내역</td></tr>"+
+                      "<tr><td>"+data.Location+"</td><td>"+data.Inspections[0].Gubun+"</td></tr>"+
+                      "<tr><td>항목</td><td>결과</td></tr>" +
+                      "<tr><td>"+data.Inspections[0].Illnesses[0].Items[0].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[0].Name+"</td></tr>"+
+                      "<tr><td>"+data.Inspections[0].Illnesses[0].Items[1].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[1].Value+"</td></tr>"+
+                      "<tr><td>"+data.Inspections[0].Illnesses[0].Items[2].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[2].Value+"</td></tr>"+
+                      "<tr><td>"+data.Inspections[0].Illnesses[0].Items[3].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[3].Value+"</td></tr>"+
+                    "</table>"
+                  )
 
+                }
+            })
+          </script>
+          
+          <script>
+            $(document).ready(function() {
+              $('#downBtn').click(function() { //pdf저장 button id
+                  html2canvas($('#resultDiv')[0]).then(function(canvas) { //저장 영역 div id
+                  
+                  //캔버스를 이미지로 변환
+                  var imgData = canvas.toDataURL('image/png');
+                     
+                  var imgWidth = 190; //이미지 가로 길이(mm) / A4 기준 210mm
+                  var pageHeight = imgWidth * 1.414;  //출력 페이지 세로 길이 계산 A4 기준
+                  var imgHeight = canvas.height * imgWidth / canvas.width;
+                  var heightLeft = imgHeight;
+                  var margin = 10; //출력 페이지 여백설정
+                  var doc = new jsPDF('p', 'mm');
+                  var position = 0;
+                     
+                  //첫 페이지 출력
+                  doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+                  heightLeft -= pageHeight;
+                       
+                  //한 페이지 이상일 경우 루프 돌면서 출력
+                  while (heightLeft >= 20) {
+                      position = heightLeft - imgHeight;
+                      doc.addPage();
+                      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                      heightLeft -= pageHeight;
+                  }
+                  //파일 저장
+                  doc.save('mydata.pdf');
+                });
+              }); 
+            })
+          </script>
   </body>
 </html>
