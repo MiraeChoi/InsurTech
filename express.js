@@ -3,6 +3,10 @@ const request = require("request");
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const app = express();
+const sampleApiData = require('./sample.json')
+
+let PayrunPy = new Promise(function(success, nosuccess) {
+=======
 var jwt = require('jsonwebtoken');
 var auth = require('./lib/auth');
 
@@ -17,7 +21,7 @@ connection.connect();
 
 let DrugrunPy = new Promise(function(success, nosuccess) {
   const { spawn } = require('child_process');
-  const pyprog = spawn('python', ['./Drug.py']);
+  const pyprog = spawn('python', ['./Pay.py']);
   pyprog.stdout.on('data', function(data){
     success(data);
   });
@@ -26,10 +30,9 @@ let DrugrunPy = new Promise(function(success, nosuccess) {
   });
 });
 
-let PayrunPy = new Promise(function(success, nosuccess) {
-
+let DrugrunPy = new Promise(function(success, nosuccess) {
   const { spawn } = require('child_process');
-  const pyprog = spawn('python', ['./Pay.py']);
+  const pyprog = spawn('python', ['./Drug.py']);
   pyprog.stdout.on('data', function(data){
     success(data);
   });
@@ -80,14 +83,16 @@ app.get('/drug', (req, res)=>{
   });
 })
 
-app.get('/inspection', (req, res)=>{
-  InspectionrunPy.then(function(fromInspectionRunpy){
-    res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});
-    console.log(fromInspectionRunpy);
-    res.end(fromInspectionRunpy);
-  });
-})
 
+app.get('/inspection', (req, res)=>{
+
+  // InspectionrunPy.then(function(fromInspectionRunpy){
+  //   res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});
+  //   console.log(fromInspectionRunpy);
+  // res.end(fromInspectionRunpy);
+  res.json(sampleApiData)
+  })
+//////////////////////////////////////////////////////////
 app.get('/', function(req, res) {
     res.render('index');
 })
