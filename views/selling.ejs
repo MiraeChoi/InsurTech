@@ -90,6 +90,11 @@
                     </a>
                 </div>
                 <br>
+                <div style="text-align:center;">
+                    <input type="radio" name="package" value="basic">기본정보 패키지&nbsp; &nbsp; &nbsp; &nbsp; 
+                    <input type="radio" name="package" value="gold">골드 패키지&nbsp; &nbsp; &nbsp; &nbsp; 
+                    <input type="radio" name="package" value="premium">프리미엄 패키지&nbsp; &nbsp; &nbsp; 
+                </div>
                 <div class="custom-control custom-checkbox text-center mt-4">
                     <input type="checkbox" id="checkbox3" class="custom-control-input">
                     <label class="custom-control-label" for="checkbox3" name='health-data'>건강 검진 내역 데이터 판매하기</label>
@@ -97,9 +102,11 @@
                 <br>
                 <!-- Privacy Section Button-->
                 <div class="text-center mt-4">
-                    <a class="btn btn-xl btn-primary" style="width: 100%;">
-                        다음으로
-                    </a>
+                    <form name="theFormName">
+                        <a class="btn btn-xl btn-primary" style="width: 100%;" value="Check" >
+                            다음으로
+                        </a>
+                    </form>
                 </div>
             </div>
         </section>
@@ -114,5 +121,6 @@
         <script src="assets/mail/contact_me.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+
     </body>
 </html>

@@ -90,7 +90,7 @@ app.get('/inspection', (req, res)=>{
   // res.end(fromInspectionRunpy);
   res.json(sampleApiData)
   })
-//////////////////////////////////////////////////////////
+
 app.get('/', function(req, res) {
     res.render('index');
 })
