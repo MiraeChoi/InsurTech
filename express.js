@@ -93,18 +93,25 @@ app.get('/inspection', (req, res)=>{
 app.get('/', function(req, res) {
     res.render('index');
 })
+app.get('/index', function(req,res) {
+    if (!req.session.login) {
+        req.session.login = false
+        req.session.idx = -1
 
-app.get('/index', function(req,res){
-    res.render('index');
+        res.render('index', {
+            login : true
+        });
+    } else {
+        console.log(req.session);
+        res.render('index', {
+            login : false
+        })
+        
+    }
 });
 
 app.get('/login', function(req,res){
-    //res.render('login');
-    let session = req.session;
-
-    res.render('login', {
-        session : session
-    });
+    res.render('login');
 });
 
 app.get('/register', function(req,res){
@@ -214,17 +221,36 @@ app.post('/result', function(req, res) {
   var ins5 = req.body.ins5;
   var ins6 = req.body.ins6;
 
-  var insInsertSql = "INSERT INTO institution (`user_id`, `seoul_univ_hospital`, `severance_hospital`, `seoul_samsung_hospital`, `samsung_biologics`, `celltrion`, `sk_biopharm`) VALUES (?, ?, ?, ?, ?, ?);";
+  var insInsertSql = "INSERT INTO institution (`user_id`, `seoul_univ_hospital`, `severance_hospital`, `seoul_samsung_hospital`, `samsung_biologics`, `celltrion`, `sk_biopharm`) VALUES (?, ?, ?, ?, ?, ?, ?);";
 
     connection.query(insInsertSql, [user_id, ins1, ins2, ins3, ins4, ins5, ins6], function (error, results, fields) {
         if (error) throw error;
         else {
             res.json(1);
-            res.render('result');
+            //res.render('result');
         }
     });
 
   console.log(req.body);
+});
+
+app.post('/list', auth, function(req, res) {
+    var option = {
+      method : "GET",
+      url : "https://testapi.openbanking.or.kr/v2.0/user/me",
+      headers : {
+        "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAwNzYxNDE0Iiwic2NvcGUiOlsiaW5xdWlyeSIsImxvZ2luIiwidHJhbnNmZXIiXSwiaXNzIjoiaHR0cHM6Ly93d3cub3BlbmJhbmtpbmcub3Iua3IiLCJleHAiOjE2MTE2MzUzMzMsImp0aSI6ImU0OTc0MGYxLWZmMDUtNDMwMi1iOWM0LWU5MzA2NWVjZTdmNyJ9.cZp7Ll8JYtN0j8RjyjUwMFbeCFVaMjFrhapr7OKvfiA"
+      },
+      qs : {
+        user_seq_no : "1100761414"
+      },
+    };
+  
+    request(option, function(err, response, body){
+      var listDataResult = JSON.parse(body); //JSON 오브젝트를 JS 오브젝트로 변경
+      console.log(listDataResult);
+      res.json(listDataResult);
+    });
 });
 
 app.listen(3000);

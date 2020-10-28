@@ -1,167 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>판매데이터 동의</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
-    <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
-
-
+    <%- include('head.ejs') %>
   </head>
     <body id="page-top">
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
-            <div class="container">
-                <a class="navbar-brand js-scroll-trigger" href="index">데이터 좀 4조</a>
-                <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">마이 건강</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">마이 계좌</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="login">로그인</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="register">회원가입</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <%- include('navigation.ejs') %>
         <br><br><br>
-        <!-- Contact Section-->
+        <!-- Check Section-->
         <section class="page-section" id="contact">
-          <div class="container">
-              <!-- Contact Section Heading-->
-              <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">기관 선택</h2>
-              <!-- Icon Divider-->
-              <div class="divider-custom">
-                  <div class="divider-custom-line"></div>
-                  <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                  <div class="divider-custom-line"></div>
-              </div>
-              <!-- Contact Section Form-->
-              <div class="row">
-                  <div class="col-lg-8 mx-auto">
-                      <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
-                      <form id="contactForm" name="sentMessage" action="/result" method="POST" novalidate="novalidate">
-                          <div id="sale"></div>
-                          <div class="form-group " style="text-align:left">
-                            <label><input type="checkbox" id="ins1" name="institution1" value="서울대학교 병원">서울대학교 병원</label>
-                            <br>
-                            <label><input type="checkbox" id="ins2" name="institution2" value="세브란스병원">세브란스병원</label>
-                            <br>
-                            <label><input type="checkbox" id="ins3" name="institution3" value="서울삼성병원">서울삼성병원</label>
-                            <br>
-                            <label><input type="checkbox" id="ins4" name="institution4" value="삼성 바이오로직스">삼성 바이오로직스</label>
-                            <br>
-                            <label><input type="checkbox" id="ins5" name="institution5" value="셀트리온">셀트리온</label>
-                            <br>
-                            <label><input type="checkbox" id="ins6" name="institution6" value="sk 바이오팜">sk 바이오팜</label>
-                        </div>
-                          
-                          <div id="down"></div>
-                          <div class="form-group">
-                            <a class="btn btn-xl btn-primary" style="width: 100%;" href="#" onclick="send();">
-                                결과보기
-                            </a>
-                        </div>
-                      </form>
-                  </div>
-              </div>
-          </div>
-      </section>
-
-      <script>
-          function send() {
-            var user_id = sessionStorage.getItem('id');
-            var ins1Res = document.getElementById("ins1").checked;
-            var ins2Res = document.getElementById("ins2").checked;
-            var ins3Res = document.getElementById("ins3").checked;
-            var ins4Res = document.getElementById("ins4").checked;
-            var ins5Res = document.getElementById("ins5").checked;
-            var ins6Res = document.getElementById("ins6").checked;
-
-            for(var i = 1; i <= 6; i++) {
-                var insName = "ins" + i + "Res";
-
-                if(insName) {
-                    insName = 1;
-                } else {
-                    insName = 0;
-                }
-            }
-            alert(ins2Res);
-            
-            $.ajax({
-				url:'/result',
-				type : 'POST',
-				data : {
-                    userId: user_id,
-                    ins1: ins1Res,
-                    ins2: ins2Res,
-                    ins3: ins3Res,
-                    ins4: ins4Res,
-                    ins5: ins5Res,
-                    ins6: ins6Res
-				},
-				success:function(responseData){
-				  if(responseData == "1"){
-					window.location.href = "/result";
-				  }
-				}
-			})
-          }
-      </script>
-
-      <!-- Footer-->
-      <footer class="footer text-center">
-        <div class="container">
-            <div class="row">
-                <!-- Footer Location-->
-                <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="text-uppercase mb-4">Location</h4>
-                    <p class="lead mb-0">
-                        서울 송파구 중대로 135 IT 벤처타워
-                        <br />
-                        KISA 핀테크 기술지원센터
-                    </p>
+            <div class="container">
+                <!-- Check Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">기관 선택</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
                 </div>
-                <!-- Footer Social Icons-->
-                <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="text-uppercase mb-4">Around the Web</h4>
-                    <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-facebook-f"></i></a>
-                    <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
-                    <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-linkedin-in"></i></a>
-                    <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-dribbble"></i></a>
-                </div>
-                <!-- Footer About Text-->
-                <div class="col-lg-4">
-                    <h4 class="text-uppercase mb-4">About Our Service</h4>
-                    <p class="lead mb-0">
-                        마이 의료 데이터와 자가 진단 데이터를 판매하시면 등록한 계좌로 바로 입금해드립니다!
-                    </p>
+                <!-- Check Section Form-->
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
+                        <form id="contactForm" name="sentMessage" action="/result" method="POST" novalidate="novalidate">
+                            <div id="sale"></div>
+                            <div class="form-group " style="text-align:left">
+                              <label><input type="checkbox" id="ins1" name="institution1" value="서울대학교 병원">서울대학교 병원</label>
+                              <br>
+                              <label><input type="checkbox" id="ins2" name="institution2" value="세브란스병원">세브란스병원</label>
+                              <br>
+                              <label><input type="checkbox" id="ins3" name="institution3" value="서울삼성병원">서울삼성병원</label>
+                              <br>
+                              <label><input type="checkbox" id="ins4" name="institution4" value="삼성 바이오로직스">삼성 바이오로직스</label>
+                              <br>
+                              <label><input type="checkbox" id="ins5" name="institution5" value="셀트리온">셀트리온</label>
+                              <br>
+                              <label><input type="checkbox" id="ins6" name="institution6" value="sk 바이오팜">sk 바이오팜</label>
+                          </div>
+                            
+                            <div id="down"></div>
+                            <div class="form-group">
+                              <a class="btn btn-xl btn-primary" style="width: 100%;" href="#" onclick="send();">
+                                  결과보기
+                              </a>
+                          </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
-    <!-- Copyright Section-->
-    <div class="copyright py-4 text-center text-white">
-        <div class="container"><small>Copyright © Your Website 2020</small></div>
-    </div>
-    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
-    <div class="scroll-to-top d-lg-none position-fixed">
-        <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a>
-    </div>
+        </section>
+        <%- include('footer.ejs') %>
         <!-- Bootstrap core JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
@@ -171,5 +58,66 @@
         <script src="assets/mail/jqBootstrapValidation.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+
+              <script>
+          function send() {
+            var user_id = sessionStorage.getItem('id');
+            var ins1Res = document.getElementById("ins1").checked;
+            var ins2Res = document.getElementById("ins2").checked;
+            var ins3Res = document.getElementById("ins3").checked;
+            var ins4Res = document.getElementById("ins4").checked;
+            var ins5Res = document.getElementById("ins5").checked;
+            var ins6Res = document.getElementById("ins6").checked;
+
+            if(ins1Res)
+                var ins1 = 1;
+            else
+                var ins1 = 0;
+
+            if(ins2Res)
+                var ins2 = 1;
+            else
+                var ins2 = 0;
+            
+            if(ins3Res)
+                var ins3 = 1;
+            else
+                var ins3 = 0;
+
+            if(ins4Res)
+                var ins4 = 1;
+            else
+                var ins4 = 0;
+            
+            if(ins5Res)
+                var ins5 = 1;
+            else
+                var ins5 = 0;
+
+            if(ins6Res)
+                var ins6 = 1;
+            else
+                var ins6 = 0;
+            
+            $.ajax({
+				url:'/result',
+				type : 'POST',
+				data : {
+                    userId: user_id,
+                    ins1: ins1,
+                    ins2: ins2,
+                    ins3: ins3,
+                    ins4: ins4,
+                    ins5: ins5,
+                    ins6: ins6
+				},
+				success:function(responseData){
+				  if(responseData == "1"){
+					window.location.href = "/result";
+				  }
+				}
+			})
+          }
+      </script>
   </body>
 </html>
