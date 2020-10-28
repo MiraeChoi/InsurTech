@@ -30,7 +30,7 @@
                           <br><br>
                           <div id="sale"></div>
                           <div class="form-group">
-                            <a href="receipt" onclick="return confirm('2000원이 적립되었습니다.')" class="btn btn-primary btn-xl" id="saleBtn" type="submit" style="width:100%;">판매하기</a>
+                            <a href="selftest" class="btn btn-primary btn-xl" id="saleBtn" type="submit" style="width:100%;">판매하기</a>
                             
                         </div>
                           
@@ -52,37 +52,61 @@
         <!-- Contact form JS-->
         <script src="assets/mail/jqBootstrapValidation.js"></script>
         <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
         <script>
 
-            function myFunction() {
-                var result=confirm("2000원이 입금되었습니다.");
-                if(result){
-                    location.href="receipt";
-                }    
-                //ajax 요청
-            }
+            
             $.ajax({
                 url:'http://localhost:3000/inspection',
                 type : 'GET',
                 data : {
                 },
                 success:function(data){
+                  console.log(data);
                   $("#resultDiv").html(
                     "<table border=3 bordercolor=black width=500 height=300 align=center>"+
-                      "<tr align=center><td><strong>항목</td><td><strong>상세내역</strong></td></tr>"+
-                      "<tr align=center><td>"+data.Location+"</td><td>"+data.Inspections[0].Gubun+"</td></tr>"+
-                      "<tr align=center><td><strong>항목</td><td><strong>결과</td></tr>" +
-                      "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[0].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[0].Name+"</td></tr>"+
-                      "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[1].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[1].Value+"</td></tr>"+
-                      "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[2].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[2].Value+"</td></tr>"+
-                      "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[3].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[3].Value+"</td></tr>"+
+                    "<tr align=center><td><strong>항목</td><td><strong>상세내역</strong></td></tr>"+
+                    "<tr align=center><td>"+data.Location+"</td><td>"+data.Inspections[0].Gubun+"</td></tr>"+
+                    "<tr align=center><td><strong>항목</td><td><strong>결과</td></tr>" +
+                    "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[0].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[0].Name+"</td></tr>"+
+                    "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[1].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[1].Value+"</td></tr>"+
+                    "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[2].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[2].Value+"</td></tr>"+
+                    "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[3].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[3].Value+"</td></tr>"+
+                    "<tr align=center><td>"+data.Inspections[0].Illnesses[1].Items[0].Name+"</td><td>"+data.Inspections[0].Illnesses[1].Items[0].Value+"</td></tr>"+
+                    "<tr align=center><td>"+data.Inspections[0].Illnesses[2].Items[0].Name+"</td><td>"+data.Inspections[0].Illnesses[2].Items[0].Value+"</td></tr>"+
+                    "<tr align=center><td>"+data.Inspections[0].Illnesses[3].Items[0].Name+"</td><td>"+data.Inspections[0].Illnesses[3].Items[0].Value+"</td></tr>"+
+                    "<tr align=center><td><strong>항목</td><td><strong>상세내역</strong></td></tr>"+
+                    "<tr align=center><td>"+data.Location+"</td><td>"+data.Inspections[1].Gubun+"</td></tr>"+
+                    "<tr align=center><td><strong>항목</td><td><strong>결과</td></tr>" +
+                    "<tr align=center><td>"+data.Inspections[1].Illnesses[0].Items[0].Name+"</td><td>"+data.Inspections[1].Illnesses[0].Items[0].Value+"</td></tr>"+
+                    "<tr align=center><td><strong>항목</td><td><strong>상세내역</strong></td></tr>"+
+                    "<tr align=center><td>"+data.Location+"</td><td>"+data.Inspections[2].Gubun+"</td></tr>"+
+                    "<tr align=center><td><strong>항목</td><td><strong>결과</td></tr>" +
+                    "<tr align=center><td>"+data.Inspections[2].Illnesses[0].Items[0].Name+"</td><td>"+data.Inspections[2].Illnesses[0].Items[0].Value+"</td></tr>"+
+                    "<tr align=center><td>"+data.Inspections[2].Illnesses[1].Items[0].Name+"</td><td>"+data.Inspections[2].Illnesses[1].Items[0].Value+"</td></tr>"+
+                    "<tr align=center><td>"+data.Inspections[2].Illnesses[2].Items[0].Name+"</td><td>"+data.Inspections[2].Illnesses[2].Items[0].Value+"</td></tr>"+
+                    "<tr align=center><td>"+data.Inspections[2].Illnesses[2].Items[1].Name+"</td><td>"+data.Inspections[2].Illnesses[2].Items[1].Value+"</td></tr>"+
+                    "<tr align=center><td>"+data.Inspections[2].Illnesses[2].Items[2].Name+"</td><td>"+data.Inspections[2].Illnesses[2].Items[2].Value+"</td></tr>"+
+                    "<tr align=center><td>"+data.Inspections[2].Illnesses[2].Items[3].Name+"</td><td>"+data.Inspections[2].Illnesses[2].Items[3].Value+"</td></tr>"+
+                    "<tr align=center><td>"+data.Inspections[2].Illnesses[3].Items[0].Name+"</td><td>"+data.Inspections[2].Illnesses[3].Items[0].Value+"</td></tr>"+
+                    "<tr align=center><td>"+data.Inspections[2].Illnesses[3].Items[1].Name+"</td><td>"+data.Inspections[2].Illnesses[3].Items[1].Value+"</td></tr>"+
+                    "<tr align=center><td>"+data.Inspections[2].Illnesses[4].Items[0].Name+"</td><td>"+data.Inspections[2].Illnesses[4].Items[0].Value+"</td></tr>"+
+                    "<tr align=center><td>"+data.Inspections[2].Illnesses[4].Items[1].Name+"</td><td>"+data.Inspections[2].Illnesses[4].Items[1].Value+"</td></tr>"+
+                    "<tr align=center><td>"+data.Inspections[2].Illnesses[4].Items[2].Name+"</td><td>"+data.Inspections[2].Illnesses[4].Items[2].Value+"</td></tr>"+
+                    "<tr align=center><td><strong>항목</td><td><strong>상세내역</strong></td></tr>"+
+                    "<tr align=center><td>"+data.Location+"</td><td>"+data.Inspections[3].Gubun+"</td></tr>"+
+                    "<tr align=center><td>"+data.Inspections[3].Illnesses[0].Items[0].Name+"</td><td>"+data.Inspections[3].Illnesses[0].Items[0].Value+"</td></tr>"+
+                    "<tr align=center><td><strong>항목</td><td><strong>상세내역</strong></td></tr>"+
+                    "<tr align=center><td>"+data.Location+"</td><td>"+data.Inspections[4].Gubun+"</td></tr>"+
+                    "<tr align=center><td>"+data.Inspections[4].Illnesses[0].Items[0].Name+"</td><td>"+data.Inspections[3].Illnesses[0].Items[0].Value+"</td></tr>"+
+
                     "</table>"
                   )
 
                 }
             })       
 
-          </script>
+            </script>
 
   </body>
 </html>
