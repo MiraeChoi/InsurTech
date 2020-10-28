@@ -69,16 +69,16 @@
               password: password
           },
           success: function (data) {
-            
-
               if(data == '2') {
                 alert("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.");
+                alert("확인용 : ", sessionStorage.getItem("id"));
                 console.log("로그인 실패");
               }
               else {
                 alert("로그인 성공");
                 window.location.href = "/index";
                 sessionStorage.setItem('id', data.userId);
+                alert("확인용 : ", sessionStorage.getItem('id'));
                 sessionStorage.setItem('email', data.email);
                 sessionStorage.setItem('ourToken', data.token);
               }
