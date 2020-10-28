@@ -5,8 +5,18 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const sampleApiData = require('./sample.json')
 
+let DrugrunPy = new Promise(function(success, nosuccess) {
+    const { spawn } = require('child_process');
+    const pyprog = spawn('python', ['./Drug.py']);
+    pyprog.stdout.on('data', function(data){
+        success(data);
+    });
+    pyprog.stderr.on('data', (data)=> {
+        nosuccess(data);
+    });
+}); 
+
 let PayrunPy = new Promise(function(success, nosuccess) {
-=======
 var jwt = require('jsonwebtoken');
 var auth = require('./lib/auth');
 
@@ -212,7 +222,7 @@ app.post('/login', function(req, res) {
             }
           }
         }
-     });
+    });
 });
 
 app.post('/result', function(req, res) {
@@ -239,20 +249,93 @@ app.post('/result', function(req, res) {
 
 app.post('/list', auth, function(req, res) {
     var option = {
-      method : "GET",
-      url : "https://testapi.openbanking.or.kr/v2.0/user/me",
-      headers : {
-        "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAwNzYxNDE0Iiwic2NvcGUiOlsiaW5xdWlyeSIsImxvZ2luIiwidHJhbnNmZXIiXSwiaXNzIjoiaHR0cHM6Ly93d3cub3BlbmJhbmtpbmcub3Iua3IiLCJleHAiOjE2MTE2MzUzMzMsImp0aSI6ImU0OTc0MGYxLWZmMDUtNDMwMi1iOWM0LWU5MzA2NWVjZTdmNyJ9.cZp7Ll8JYtN0j8RjyjUwMFbeCFVaMjFrhapr7OKvfiA"
-      },
-      qs : {
-        user_seq_no : "1100761414"
-      },
+        method : "GET",
+        url : "https://testapi.openbanking.or.kr/v2.0/user/me",
+        headers : {
+            "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAwNzYxNDE0Iiwic2NvcGUiOlsiaW5xdWlyeSIsImxvZ2luIiwidHJhbnNmZXIiXSwiaXNzIjoiaHR0cHM6Ly93d3cub3BlbmJhbmtpbmcub3Iua3IiLCJleHAiOjE2MTE2MzUzMzMsImp0aSI6ImU0OTc0MGYxLWZmMDUtNDMwMi1iOWM0LWU5MzA2NWVjZTdmNyJ9.cZp7Ll8JYtN0j8RjyjUwMFbeCFVaMjFrhapr7OKvfiA"
+        },
+        qs : {
+            user_seq_no : "1100761414"
+        },
     };
-  
+
     request(option, function(err, response, body){
-      var listDataResult = JSON.parse(body); //JSON 오브젝트를 JS 오브젝트로 변경
-      console.log(listDataResult);
-      res.json(listDataResult);
+        var listDataResult = JSON.parse(body); //JSON 오브젝트를 JS 오브젝트로 변경
+        console.log(listDataResult);
+        res.json(listDataResult);
+    });
+});
+
+app.post('/balance', auth , function(req, res){
+    var userId = req.decoded.userId;
+    var finusenum = req.body.fin_use_num;
+    console.log(finusenum);
+
+    // 데이터베이스에 사용자 Accesstoken 조회 후
+    // 금융위 API 잔액 조회 요청 만들고 데이터 그대로 response 하기
+    
+    var userSearchSql = "SELECT * FROM user WHERE email = ?";
+    var countnum = Math.floor(Math.random() * 1000000000) + 1;
+    var transId = "T991646210U" + countnum; // 이용기관번호 본인것 입력
+    connection.query(userSearchSql,[userId], function(err, results){
+        if(err) throw err;
+        else {
+            var option = {
+            method: "GET",
+            url: "https://testapi.openbanking.or.kr/v2.0/account/balance/fin_num",
+            headers: {
+                "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAwNzYxNDE0Iiwic2NvcGUiOlsiaW5xdWlyeSIsImxvZ2luIiwidHJhbnNmZXIiXSwiaXNzIjoiaHR0cHM6Ly93d3cub3BlbmJhbmtpbmcub3Iua3IiLCJleHAiOjE2MTE2MzUzMzMsImp0aSI6ImU0OTc0MGYxLWZmMDUtNDMwMi1iOWM0LWU5MzA2NWVjZTdmNyJ9.cZp7Ll8JYtN0j8RjyjUwMFbeCFVaMjFrhapr7OKvfiA"
+            },
+            //form 형태는 form / 쿼리스트링 형태는 qs / json 형태는 json ***
+            qs: {
+                bank_tran_id : transId,
+                fintech_use_num : "199164621057885695842943",
+                tran_dtime : "20201022144300"
+            },
+            };
+            request(option, function(err, response, body){
+            var balanceData = JSON.parse(body); //JSON 오브젝트를 JS 오브젝트로 변경
+            console.log(balanceData);
+            res.json(balanceData)
+            })    
+        }
+    })
+});
+
+app.post('/transactionlist', auth, function(req, res){
+    var userId = req.decoded.userId;
+    var finusenum = req.body.fin_use_num; 
+    var userSearchSql = "SELECT * FROM user WHERE email = ?";
+    var countnum = Math.floor(Math.random() * 1000000000) + 1;
+    var transId = "T991646210U" + countnum; //이용기관번호 본인것 입력
+
+    connection.query(userSearchSql,[userId], function(err, results){
+        if(err) throw err;
+        else {
+            var option = {
+                method: "POST",
+                url: "https://testapi.openbanking.or.kr/v2.0/account/transaction_list/fin_num",
+                headers: {
+                "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAwNzYxNDE0Iiwic2NvcGUiOlsiaW5xdWlyeSIsImxvZ2luIiwidHJhbnNmZXIiXSwiaXNzIjoiaHR0cHM6Ly93d3cub3BlbmJhbmtpbmcub3Iua3IiLCJleHAiOjE2MTE2MzUzMzMsImp0aSI6ImU0OTc0MGYxLWZmMDUtNDMwMi1iOWM0LWU5MzA2NWVjZTdmNyJ9.cZp7Ll8JYtN0j8RjyjUwMFbeCFVaMjFrhapr7OKvfiA"
+                },
+                //form 형태는 form / 쿼리스트링 형태는 qs / json 형태는 json ***
+                qs: {
+                bank_tran_id: transId,
+                fintech_use_num:finusenum,
+                inquiry_type:'A',
+                inquiry_base:'D',
+                from_date:'20200101',
+                to_date:'20200101',
+                sort_order:'D',
+                tran_dtime:'20201022144300'
+                },
+            };
+            request(option, function(err, response, body){
+                var trasactionList = JSON.parse(body); //JSON 오브젝트를 JS 오브젝트로 변경
+                console.log(trasactionList);
+                res.json(trasactionList)
+            })    
+        }
     });
 });
 
