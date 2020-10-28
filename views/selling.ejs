@@ -98,7 +98,7 @@
 
 
 
-                <div class="text-center mt-4" style="width: 100%;">
+                <div class="text-center mt-4" style="width: 100%;" data-toggle="modal" data-target="#detail">
                     <a class="btn btn-xl btn-outline-dark">
                         상세 내용
                     </a>
@@ -118,7 +118,8 @@
             </div>
         </section>
         <%- include('footer.ejs') %>
-   <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-labelledby="portfolioModal3Label" aria-hidden="true">
+
+        <div class="portfolio-modal modal fade" id="detail" tabindex="-1" role="dialog" aria-labelledby="portfolioModal1Label" aria-hidden="true">
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -129,20 +130,19 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-8">
                                     <!-- Portfolio Modal - Title-->
-                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal3Label">건강검진</h2>
+                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0" id="portfolioModal1Label">약</h2>
                                     <!-- Icon Divider-->
                                     <div class="divider-custom">
                                         <div class="divider-custom-line"></div>
                                         <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                         <div class="divider-custom-line"></div>
                                     </div>
-                                    
                                     <!-- Portfolio Modal - Text-->
-                                    <p class="mb-5">최근 10년간 건강보험공단에서 실시한 건강검진의 조회 및 판매할 수 있습니다.
-                                        <br>
-                                        건강검진 년도, 검진 일자, 검진 장소, 진단 장소, 진단에 대한 설명, 검진 결과, 질환 병, 항목별 검사 결과, 검사 항목명, 검진 결과 값 등의 데이터를 조회 및 판매할 수 있습니다.
-                                    </p>
-                                    <a href="selling" onclick="return console.log()" class="btn btn-primary"  id="dataBtn" type="submit" >마이데이터 판매하기</a>
+                                    <div style="text-align: center;"> 
+                                        <img src="/img/grade.PNG" alt="">
+                                    </div>
+                                    <br>
+                                    <a href="selling" onclick="return console.log()" class="btn btn-primary"  id="dataBtn" type="submit" >닫기</a>
                                 </div>
                             </div>
                         </div>
@@ -150,8 +150,6 @@
                 </div>
             </div>
         </div>
-
-
 
 
 

@@ -155,6 +155,10 @@ app.get('/check', function(req, res) {
     res.render('check');
 });
 
+app.get('/selftest', function(req, res) {
+  res.render('selftest');
+});
+
 app.get('/authTest', auth ,function(req, res){
   console.log(req.decoded);
   //토큰에 있는 데이터 확인
