@@ -5,7 +5,7 @@
     </head>
     <body id="page-top">
         <%- include('navigation.ejs') %>
-        <br>
+        <br><br><br>
         <!-- Privacy Section-->
         <section class="page-section portfolio" id="portfolio">
             <div class="container">
@@ -20,16 +20,17 @@
                 <!-- Privacy Section Content-->
                 <div class="row">
                     <div class="col-lg-4 ml-auto text-center">
-                        <p class="lead">설명
-                        <br>
-                        건강보험공단에 납세한 건강보험 내역을 조회 및 판매할 수 있습니다. </p>
+                        <h4>설명</h4>
+                        <p class="lead">건강보험공단에 납세한 건강보험 내역을 조회 및 판매할 수 있습니다. </p>
 
                     </div>
-                    <div class="col-lg-4 mr-auto text-center"><p class="lead">항목
-                        <br>
-                        고지 금액, 납부 마감일, 수납 납부일, 수납 보험료, 수납 연체금, 수납 총 보험료, 미납 보험료, 미납 연체금, 미납 총 보험료
-                    </p></div>
-                    <div class="col-lg-4 mr-auto text-center"><p class="lead">가격<br>1건 당 2,000원</p></div>
+                    <div class="col-lg-4 mr-auto text-center">
+                        <h4>항목</h4>
+                        <p class="lead">고지 금액, 납부 마감일, 수납 납부일, 수납 보험료, 수납 연체금, 수납 총 보험료, 미납 보험료, 미납 연체금, 미납 총 보험료</p>
+                </div>
+                    <div class="col-lg-4 mr-auto text-center">
+                        <h4>가격</h4>
+                        <p class="lead">1건 당 2,000원</p></div>
                 </div>
                 <div class="text-center mt-4" style="width: 100%;">
                     <a class="btn btn-xl btn-outline-dark"  href="/pay">
@@ -39,9 +40,12 @@
                 <br>
                 <div class="custom-control custom-checkbox text-center mt-4">
                     <input type="checkbox" id="checkbox1" class="custom-control-input">
-                    <label class="custom-control-label" for="checkbox1" name="insurance-data">건강보험료 데이터 판매하기</label>
+                    <label class="custom-control-label" for="checkbox1" name="insurance-data"><h5>건강보험료 데이터 판매하기</h5></label>
                 </div>
                 <br><br>
+                <hr class="solid">
+                <br><br>
+                
                 <!-- Privacy Section Heading-->
                 <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">약국 이용 이력 데이터</h2>
                 <!-- Icon Divider-->
@@ -52,16 +56,20 @@
                 </div>
                 <!-- Privacy Section Content-->
                 <div class="row">
-                    <div class="col-lg-4 ml-auto text-center"><p class="lead">설명<br>약국에서 약을 구매한 내역 데이터를 조회 및 판매할 수 있습니다.
+                    <div class="col-lg-4 ml-auto text-center">
+                        <h4>설명</h4>
+                        <p class="lead">약국에서 약을 구매한 내역 데이터를 조회 및 판매할 수 있습니다.
                     </p></div>
-                    
-                    <div class="col-lg-4 mr-auto text-center"><p class="lead">항목<br>약국이름, 종류, 해당 약, 처방 일수, 성분의 수량
+                    <br>
+                    <div class="col-lg-4 mr-auto text-center">
+                        <h4>항목</h4>
+                        <p class="lead">약국이름, 종류, 해당 약, 처방 일수, 성분의 수량
                     </p></div>
-                    <div class="col-lg-4 mr-auto text-center"><p class="lead">가격<br>1건 당 2,000원</p></div>
+                    <div class="col-lg-4 mr-auto text-center">
+                        <h4>가격</h4>
+                        <p class="lead">1건 당 2,000원</p></div>
                 </div>
                 <div class="text-center mt-4" style="width: 100%;">
-                    <a class="btn btn-xl btn-outline-dark" >
-                        약국에서 약을 구매한 내역 데이터를 조회 및 판매할 수 있습니다.
                     <a class="btn btn-xl btn-outline-dark">
                         상세 내용
                     </a>
@@ -69,8 +77,10 @@
                 <br>
                 <div class="custom-control custom-checkbox text-center mt-4">
                     <input type="checkbox" id="checkbox2" class="custom-control-input">
-                    <label class="custom-control-label" for="checkbox2" name="drug-data">약국 이용 이력 데이터 판매하기</label>
+                    <label class="custom-control-label" for="checkbox2" name="drug-data"><h5>약국 이용 이력 데이터 판매하기</h5></label>
                 </div>
+                <br><br>
+                <hr class="solid">
                 <br><br>
                 <!-- Privacy Section Heading-->
                 <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">건강 검진 내역 데이터</h2>
@@ -82,9 +92,15 @@
                 </div>
                 <!-- Privacy Section Content-->
                 <div class="row">
-                    <div class="col-lg-4 ml-auto text-center"><p class="lead">설명<br>최근 10년간 건강보험공단에서 실시한 건강검진의 조회 및 판매할 수 있습니다.</p></div>
-                    <div class="col-lg-4 mr-auto text-center"><p class="lead">항목<br>건강검진 년도, 검진 일자, 검진 장소, 진단 장소, 진단에 대한 설명, 검진 결과, 질환 병, 항목별 검사 결과, 검사 항목명, 검진 결과 값</p></div>
-                    <div class="col-lg-4 mr-auto text-center"><p class="lead">가격<br>1건 당 2,000원</p></div>
+                    <div class="col-lg-4 ml-auto text-center">
+                        <h4>설명</h4>
+                        <p class="lead">최근 10년간 건강보험공단에서 실시한 건강검진의 조회 및 판매할 수 있습니다.</p></div><br>
+                    <div class="col-lg-4 mr-auto text-center">
+                        <h4>항목</h4>
+                        <p class="lead">건강검진 년도, 검진 일자, 검진 장소, 진단 장소, 진단에 대한 설명, 검진 결과, 질환 병, 항목별 검사 결과, 검사 항목명, 검진 결과 값</p></div>
+                    <div class="col-lg-4 mr-auto text-center">
+                        <h4>가격</h4>
+                        <p class="lead">1건 당 2,000원</p></div>
                 </div>
                 <div class="text-center mt-4" style="width: 100%;">
                     <a class="btn btn-xl btn-outline-dark" >
@@ -94,12 +110,12 @@
                 <br>
                 <div class="custom-control custom-checkbox text-center mt-4">
                     <input type="checkbox" id="checkbox3" class="custom-control-input">
-                    <label class="custom-control-label" for="checkbox3" name='health-data'>건강 검진 내역 데이터 판매하기</label>
+                    <label class="custom-control-label" for="checkbox3" name='health-data'><h5>건강 검진 내역 데이터 판매하기</h5></label>
                 </div>
                 <br>
                 <!-- Privacy Section Button-->
                 <div class="text-center mt-4">
-                    <a class="btn btn-xl btn-primary" style="width: 100%;">
+                    <a class="btn btn-xl btn-primary text-white" style="width: 100%;">
                         다음으로
                     </a>
                 </div>
