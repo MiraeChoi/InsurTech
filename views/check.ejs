@@ -8,7 +8,7 @@
         <br><br><br>
         <!-- Check Section-->
         <section class="page-section" id="contact">
-<<<<<<< HEAD
+
           <div class="container">
               <!-- Contact Section Heading-->
               <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">기관 선택</h2>
@@ -69,16 +69,6 @@
                     <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
                     <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-linkedin-in"></i></a>
                     <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-dribbble"></i></a>
-=======
-            <div class="container">
-                <!-- Check Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">기관 선택</h2>
-                <!-- Icon Divider-->
-                <div class="divider-custom">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
->>>>>>> 21174f34b6c5865b09c2d5852909fb3c60b1745a
                 </div>
                 <!-- Check Section Form-->
                 <div class="row">
@@ -163,9 +153,9 @@
                 var ins6 = 0;
             
             $.ajax({
-				url:'/result',
-				type : 'POST',
-				data : {
+            url:'/result',
+            type : 'POST',
+            data : {
                     userId: user_id,
                     ins1: ins1,
                     ins2: ins2,
@@ -173,13 +163,13 @@
                     ins4: ins4,
                     ins5: ins5,
                     ins6: ins6
-				},
-				success:function(responseData){
-				  if(responseData == "1"){
-					window.location.href = "/result";
-				  }
-				}
-			})
+            },
+            success:function(responseData){
+              if(responseData == "1"){
+               window.location.href = "/result";
+              }
+            }
+         })
           }
       </script>
   </body>
