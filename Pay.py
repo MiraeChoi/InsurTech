@@ -16,11 +16,11 @@ class PayResults():
     def payResult():
 
         #변수 세팅
-        API_KEY					= "bc732587dcce4d28a538e33c43ede40b"							
-        IDENTITY_NUMBER			= "9103051245711"						#주민등록번호
-        CERT_PASSWORD			= "zhdkffk1!!"							#인증서 비밀번호
-        PHONE_NUMBER			= "01023408391"							#핸드폰 번호
-        DIR_PATH				= r"C:\Users\82104\AppData\LocalLow\NPKI\yessign\USER\cn=윤차돌(Yunchadol)0020045201505113070126,ou=WOORI,ou=personal4IB,o=yessign,c=kr" #인증서 경로 폴더
+        API_KEY					= "97cac8242dba4ef7932ee5edaea6a066"							
+        IDENTITY_NUMBER			= ""						#주민등록번호
+        CERT_PASSWORD			= ""							#인증서 비밀번호
+        PHONE_NUMBER			= ""							#핸드폰 번호
+        DIR_PATH				= r"C:\Users\82104\AppData\LocalLow\NPKI\yessign\USER\cn=0020045201505113070126,ou=WOORI,ou=personal4IB,o=yessign,c=kr" #인증서 경로 폴더
 
         #API헬퍼 초기화
         apiHelper				= APIHelper(API_KEY)

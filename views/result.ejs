@@ -58,6 +58,7 @@
         <script src="js/jspdf.min.js"></script>
 
         <script>
+
             function myFunction() {
                 var result=confirm("2000원이 입금되었습니다.");
                 if(result){
@@ -72,16 +73,21 @@
                 },
                 success:function(data){
                   $("#resultDiv").html(
-                    "<table>"+
-                      "<tr><td>항목</td><td>상세내역</td></tr>"+
-                      "<tr><td>"+data.Location+"</td><td>"+data.Inspections[0].Gubun+"</td></tr>"+
-                      "<tr><td>항목</td><td>결과</td></tr>" +
-                      "<tr><td>"+data.Inspections[0].Illnesses[0].Items[0].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[0].Name+"</td></tr>"+
-                      "<tr><td>"+data.Inspections[0].Illnesses[0].Items[1].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[1].Value+"</td></tr>"+
-                      "<tr><td>"+data.Inspections[0].Illnesses[0].Items[2].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[2].Value+"</td></tr>"+
-                      "<tr><td>"+data.Inspections[0].Illnesses[0].Items[3].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[3].Value+"</td></tr>"+
+                    "<table border=3 bordercolor=black width=500 height=300 align=center>"+
+                      "<tr align=center><td><strong>항목</td><td><strong>상세내역</strong></td></tr>"+
+                      "<tr align=center><td>"+data.Location+"</td><td>"+data.Inspections[0].Gubun+"</td></tr>"+
+                      "<tr align=center><td><strong>항목</td><td><strong>결과</td></tr>" +
+                      "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[0].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[0].Name+"</td></tr>"+
+                      "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[1].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[1].Value+"</td></tr>"+
+                      "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[2].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[2].Value+"</td></tr>"+
+                      "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[3].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[3].Value+"</td></tr>"+
                     "</table>"
                   )
+
+                }
+            })       
+
+          </script>
 
                 }
             })
