@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from APIHelper import APIHelper
 from Models import RSApublicKey, AuthResponse
 from asn1crypto import x509
@@ -12,8 +12,8 @@ from flask_cors import CORS
 import sys    
 sys.stdout.reconfigure(encoding='utf-8')
 
-class Results():
-    def result():
+class PayResults():
+    def payResult():
 
         #변수 세팅
         API_KEY					= "bc732587dcce4d28a538e33c43ede40b"							
@@ -45,18 +45,9 @@ class Results():
         #건강보험료 납부 내역 조회
         paymentResult			= apiHelper.getPaymentList(aesCipheredKey, _certFilePath, _keyFilePath, IDENTITY_NUMBER, CERT_PASSWORD, '2010', "01", "02")
         myPaymentResults = json.loads(paymentResult)
-        
+    
 
-        #내가 먹는 약 조회
-        myDrugResult			= apiHelper.getMYDrug(aesCipheredKey, _certFilePath, _keyFilePath, IDENTITY_NUMBER, CERT_PASSWORD, PHONE_NUMBER)
-        myDrugResults = json.loads(myDrugResult)
-
-            
-        #진단받은 질환 조회
-        myInspection 			= apiHelper.getMYInspection(aesCipheredKey, _certFilePath, _keyFilePath, IDENTITY_NUMBER, CERT_PASSWORD, PHONE_NUMBER)
-        myInspectionResults = json.loads(myInspection)
-
-        print(myPaymentResults, myDrugResults, myInspectionResults)
+        print(myPaymentResults)
 
 
-Results.result()
+PayResults.payResult()
