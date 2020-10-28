@@ -61,8 +61,7 @@
 							<div id="success"></div>
 							<br><br>
                             <div class="form-group">
-                                <a href="index" onclick="return console.log()"  class="btn btn-primary btn-xl"  id="registerBtn" style="width : 100%;" >회원가입</a>
-                           
+                                <a href="#" onclick="return console.log()" class="btn btn-primary btn-xl"  id="registerBtn" style="width : 100%;" >회원가입</a>
                             </div>
                         </form>
                     </div>
@@ -81,7 +80,8 @@
 		<script src="js/scripts.js"></script>
 	<script>
 		$("#registerBtn").click(function () {
-		var username = $("#username").val();
+
+		var username = $("#name").val();
 		var email = $("#email").val();
 		var password = $("#password").val();
 		var bank = $("#bank").val();
@@ -100,7 +100,7 @@
 				success:function(responseData){
 				  if(responseData == "1"){
 					alert("가입 완료");
-					//로그인 화면으로 넘어가면 좋을 것 같아요. - 미래
+					window.location.href = "/login";
 				  }
 				}
 			})  

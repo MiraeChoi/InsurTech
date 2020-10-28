@@ -38,48 +38,52 @@
                         </div>
                           <br><br>
                           <div id="success"></div>
-                          <div class="form-group"><button class="btn btn-primary btn-xl" id="loginBtn" type="submit" style="width:100%;">로그인</button></div>
+                          <div class="form-group"><button class="btn btn-primary btn-xl" id="loginBtn" style="width:100%;">로그인</button></div>
                       </form>
                   </div>
               </div>
           </div>
       </section>
       <%- include('footer.ejs') %>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
-        <!-- Third party plugin JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-        <!-- Contact form JS-->
-        <script src="assets/mail/jqBootstrapValidation.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-        <script>
-	$("#loginBtn").click(function(){
+      <!-- Bootstrap core JS-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+      <!-- Third party plugin JS-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+      <!-- Contact form JS-->
+      <script src="assets/mail/jqBootstrapValidation.js"></script>
+      <!-- Core theme JS-->
+      <script src="js/scripts.js"></script>
+
+      <script>
+      $("#loginBtn").click(function(){
         var email = $("#email").val();
         var password = $("#password").val();
+
         $.ajax({
           url: "/login",
           type: "POST",
+          async: false,
           data: {
               email: email,
               password: password
           },
           success: function (data) {
+            
+
               if(data == '2') {
                 alert("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.");
                 console.log("로그인 실패");
               }
               else {
                 alert("로그인 성공");
-                console.log('로그인 성공', data);
                 window.location.href = "/index";
-                sessionStorage.setItem('email', email);
-                sessionStorage.setItem('ourToken', data);
+                sessionStorage.setItem('id', data.userId);
+                sessionStorage.setItem('ourToken', data.token);
               }
           },
         });
-    });
-    </script>
-  </body>
+      });
+      </script>
+    </body>
 </html>
