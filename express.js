@@ -114,6 +114,10 @@ app.get('/register', function(req,res){
     res.render('register');
 });
 
+app.get('/result', function(req,res){
+  res.render('result');
+});
+
 app.get('/result2', function(req,res){
     res.render('result2');
 });
