@@ -32,7 +32,7 @@
                     <div class="col-lg-4 mr-auto text-center"><p class="lead">가격<br>1건 당 2,000원</p></div>
                 </div>
                 <div class="text-center mt-4" style="width: 100%;">
-                    <a class="btn btn-xl btn-outline-dark"  href="/pay">
+                    <a class="btn btn-xl btn-outline-dark">
                         상세 내용
                     </a>
                 </div>
@@ -60,7 +60,7 @@
                     <div class="col-lg-4 mr-auto text-center"><p class="lead">가격<br>1건 당 2,000원</p></div>
                 </div>
                 <div class="text-center mt-4" style="width: 100%;">
-                    <a class="btn btn-xl btn-outline-dark" >
+                    <a class="btn btn-xl btn-outline-dark">
                         약국에서 약을 구매한 내역 데이터를 조회 및 판매할 수 있습니다.
                     <a class="btn btn-xl btn-outline-dark">
                         상세 내용
@@ -91,19 +91,17 @@
                         <li>프리미엄 패키지: 기본 + 질병 + 자가문진(생활습관, 가족력, 최근 병력 등)(4,000원)</li>
                     </ul>
                 </div>
-                </div>
-                <div style="text-align:center;">
-                <input type="radio" name="package" value="basic">기본정보 패키지&nbsp; &nbsp; &nbsp; &nbsp; 
-                <input type="radio" name="package" value="gold">골드 패키지&nbsp; &nbsp; &nbsp; &nbsp; 
-                <input type="radio" name="package" value="premium">프리미엄 패키지&nbsp; &nbsp; &nbsp; 
-                </div>
 
-                <div class="text-center mt-4" style="width: 100%;" data-toggle="modal" data-target="#detail">
                     <a class="btn btn-xl btn-outline-dark">
                         상세 내용
                     </a>
                 </div>
                 <br>
+                <div style="text-align:center;">
+                    <input type="radio" name="package" value="basic">기본정보 패키지&nbsp; &nbsp; &nbsp; &nbsp; 
+                    <input type="radio" name="package" value="gold">골드 패키지&nbsp; &nbsp; &nbsp; &nbsp; 
+                    <input type="radio" name="package" value="premium">프리미엄 패키지&nbsp; &nbsp; &nbsp; 
+                    </div>
                 <div class="custom-control custom-checkbox text-center mt-4">
                     <input type="checkbox" id="checkbox3" class="custom-control-input">
                     <label class="custom-control-label" for="checkbox3" name='health-data'>건강 검진 내역 데이터 판매하기</label>
@@ -111,9 +109,9 @@
                 <br>
                 <!-- Privacy Section Button-->
                 <div class="text-center mt-4">
-                    <a class="btn btn-xl btn-primary" style="width: 100%;">
+                    <button class="btn btn-xl btn-primary" id="next" style="width: 100%;" >
                         다음으로
-                    </a>
+                    </button>
                 </div>
             </div>
         </section>
@@ -175,5 +173,21 @@
         <script src="assets/mail/contact_me.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+        <script>
+            $("#next").click(function(){
+                var radioVal = $('input[name="package"]:checked').val();
+                if(radioVal == 'basic'){
+                    $(location).attr('href', 'http://localhost:3000/result');
+                }
+                else if(radioVal=='gold'){
+                    $(location).attr('href', 'http://localhost:3000/result2');
+                }
+                else{
+                    $(location).attr('href', 'http://localhost:3000/result3');
+                }
+                console.log(radioVal)      
+            })
+        </script>
+          
     </body>
 </html>
