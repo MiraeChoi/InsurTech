@@ -76,7 +76,6 @@ app.get('/inspection', (req, res)=>{
   // res.end(fromInspectionRunpy);
   res.json(sampleApiData)
   })
-//////////////////////////////////////////////////////
 
 app.get('/', function(req, res) {
     res.render('index');
@@ -115,8 +114,17 @@ app.get('/register', function(req,res){
     res.render('register');
 });
 
-app.get('/result', function(req,res){
-    res.render('result');
+app.get('/result2', function(req,res){
+    res.render('result2');
+});
+
+app.get('/result3', function(req,res){
+  res.render('result3');
+});
+
+
+app.get('/selftest', function(req,res){
+  res.render('selftest');
 });
 
 app.get('/receipt', function(req,res){
