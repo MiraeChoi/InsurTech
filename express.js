@@ -3,6 +3,7 @@ const request = require("request");
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const app = express();
+const sampleApiData = require('./sample.json')
 
 let DrugrunPy = new Promise(function(success, nosuccess) {
     const { spawn } = require('child_process');
@@ -16,9 +17,32 @@ let DrugrunPy = new Promise(function(success, nosuccess) {
 }); 
 
 let PayrunPy = new Promise(function(success, nosuccess) {
+var jwt = require('jsonwebtoken');
+var auth = require('./lib/auth');
 
+var mysql = require("mysql");
+var connection = mysql.createConnection({
+    host: "192.168.30.49",
+    user: "team4",
+    password: "team4",
+    database: "team4",
+  });
+connection.connect();
+
+let DrugrunPy = new Promise(function(success, nosuccess) {
   const { spawn } = require('child_process');
   const pyprog = spawn('python', ['./Pay.py']);
+  pyprog.stdout.on('data', function(data){
+    success(data);
+  });
+  pyprog.stderr.on('data', (data)=> {
+    nosuccess(data);
+  });
+});
+
+let DrugrunPy = new Promise(function(success, nosuccess) {
+  const { spawn } = require('child_process');
+  const pyprog = spawn('python', ['./Drug.py']);
   pyprog.stdout.on('data', function(data){
     success(data);
   });
@@ -38,18 +62,6 @@ let InspectionrunPy = new Promise(function(success, nosuccess) {
     nosuccess(data);
   });
 });
-
-var jwt = require('jsonwebtoken');
-var auth = require('./lib/auth');
-
-var mysql = require("mysql");
-var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "dlthdus0518",
-    database: "team4",
-  });
-connection.connect();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -81,14 +93,16 @@ app.get('/drug', (req, res)=>{
   });
 })
 
-app.get('/inspection', (req, res)=>{
-  InspectionrunPy.then(function(fromInspectionRunpy){
-    res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});
-    console.log(fromInspectionRunpy);
-    res.end(fromInspectionRunpy);
-  });
-})
 
+app.get('/inspection', (req, res)=>{
+
+  // InspectionrunPy.then(function(fromInspectionRunpy){
+  //   res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});
+  //   console.log(fromInspectionRunpy);
+  // res.end(fromInspectionRunpy);
+  res.json(sampleApiData)
+  })
+//////////////////////////////////////////////////////////
 app.get('/', function(req, res) {
     res.render('index');
 })
@@ -115,6 +129,10 @@ app.get('/login', function(req,res){
 
 app.get('/register', function(req,res){
     res.render('register');
+});
+
+app.get('/result', function(req,res){
+    res.render('result');
 });
 
 app.get('/receipt', function(req,res){
@@ -156,15 +174,12 @@ app.post('/register', function(req, res) {
         if (error) throw error;
         else {
             res.json(1);
-            res.render('index');
         }
     });
     console.log(req.body);
 });
 
 app.post('/login', function(req, res) {
-    console.log(req.body);
-
     var email = req.body.email;
     var password = req.body.password;
 
@@ -182,19 +197,22 @@ app.post('/login', function(req, res) {
               var tokenKey = "fintech1234!" // 토큰키 추가
               jwt.sign(
                 {
-                  userId: results[0].id,
+                  userId: results[0].user_id,
                   userEmail: results[0].email,
                 },
                 tokenKey,
                 {
-                  expiresIn: "1d",
+                  expiresIn: "7d",
                   issuer: "fintech.admin",
                   subject: "user.login.info",
                 },
                 function (err, token) {
                   console.log("로그인 성공", token);
-                  res.json(token);
-                  
+                  var userData = {
+                    userId : results[0].user_id,
+                    token : token
+                  }
+                  res.json(userData);
                 }
               );
             }
@@ -205,6 +223,28 @@ app.post('/login', function(req, res) {
           }
         }
     });
+});
+
+app.post('/result', function(req, res) {
+  var user_id = req.body.userId;
+  var ins1 = req.body.ins1;
+  var ins2 = req.body.ins2;
+  var ins3 = req.body.ins3;
+  var ins4 = req.body.ins4;
+  var ins5 = req.body.ins5;
+  var ins6 = req.body.ins6;
+
+  var insInsertSql = "INSERT INTO institution (`user_id`, `seoul_univ_hospital`, `severance_hospital`, `seoul_samsung_hospital`, `samsung_biologics`, `celltrion`, `sk_biopharm`) VALUES (?, ?, ?, ?, ?, ?, ?);";
+
+    connection.query(insInsertSql, [user_id, ins1, ins2, ins3, ins4, ins5, ins6], function (error, results, fields) {
+        if (error) throw error;
+        else {
+            res.json(1);
+            //res.render('result');
+        }
+    });
+
+  console.log(req.body);
 });
 
 app.post('/list', auth, function(req, res) {
