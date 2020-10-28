@@ -3,14 +3,51 @@ const request = require("request");
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const app = express();
+
+let DrugrunPy = new Promise(function(success, nosuccess) {
+
+  const { spawn } = require('child_process');
+  const pyprog = spawn('python', ['./Drug.py']);
+  pyprog.stdout.on('data', function(data){
+    success(data);
+  });
+  pyprog.stderr.on('data', (data)=> {
+    nosuccess(data);
+  });
+});
+
+let PayrunPy = new Promise(function(success, nosuccess) {
+
+  const { spawn } = require('child_process');
+  const pyprog = spawn('python', ['./Pay.py']);
+  pyprog.stdout.on('data', function(data){
+    success(data);
+  });
+  pyprog.stderr.on('data', (data)=> {
+    nosuccess(data);
+  });
+});
+
+let InspectionrunPy = new Promise(function(success, nosuccess) {
+
+  const { spawn } = require('child_process');
+  const pyprog = spawn('python', ['./Inspection.py']);
+  pyprog.stdout.on('data', function(data){
+    success(data);
+  });
+  pyprog.stderr.on('data', (data)=> {
+    nosuccess(data);
+  });
+});
+
 var jwt = require('jsonwebtoken');
 var auth = require('./lib/auth');
 
 var mysql = require("mysql");
 var connection = mysql.createConnection({
     host: "localhost",
-    user: "team4",
-    password: "team4",
+    user: "root",
+    password: "gjdmsquf!97",
     database: "team4",
   });
 connection.connect();
@@ -28,6 +65,30 @@ app.use(session({
 
 app.set('views', __dirname + '/views');
 app.set('view engine','ejs');
+////////////////////////////////////////////////////
+app.get('/pay', (req, res)=>{
+  PayrunPy.then(function(fromPayRunpy){
+    res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});
+    console.log(fromPayRunpy);
+    res.end(fromPayRunpy);
+  });
+})
+
+app.get('/drug', (req, res)=>{
+  DrugrunPy.then(function(fromDrugRunpy){
+    res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});
+    console.log(fromDrugRunpy);
+    res.end(fromDrugRunpy);
+  });
+})
+
+app.get('/inspection', (req, res)=>{
+  InspectionrunPy.then(function(fromInspectionRunpy){
+    res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});
+    console.log(fromInspectionRunpy);
+    res.end(fromInspectionRunpy);
+  });
+})
 
 app.get('/', function(req, res) {
     res.render('index');
@@ -55,9 +116,11 @@ app.get('/register', function(req,res){
     res.render('register');
 });
 
-app.get('/result', function(req,res){
-    res.render('result');
-});
+// app.get('/result', function(req,res){
+//     res.render('result');
+// });
+
+
 
 app.get('/receipt', function(req,res){
     res.render('receipt');
@@ -147,5 +210,6 @@ app.post('/login', function(req, res) {
         }
      });
 });
+
 
 app.listen(3000);
