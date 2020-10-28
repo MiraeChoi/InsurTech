@@ -47,7 +47,7 @@ var auth = require('./lib/auth');
 
 var mysql = require("mysql");
 var connection = mysql.createConnection({
-    host: "192.168.30.49",
+    host: "172.30.1.21",
     user: "team4",
     password: "team4",
     database: "team4",
