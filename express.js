@@ -2,68 +2,8 @@ const express = require('express');
 const request = require("request");
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const sampleApiData = require('./sample.json');
 const app = express();
-var jwt = require('jsonwebtoken');
-const sampleApiData = require('./sample.json')
-
-let DrugrunPy = new Promise(function(success, nosuccess) {
-    const { spawn } = require('child_process');
-    const pyprog = spawn('python', ['./Drug.py']);
-    pyprog.stdout.on('data', function(data){
-        success(data);
-    });
-    pyprog.stderr.on('data', (data)=> {
-        nosuccess(data);
-    });
-}); 
-
-let PayrunPy = new Promise(function(success, nosuccess) {
-var jwt = require('jsonwebtoken');
-var auth = require('./lib/auth');
-
-var mysql = require("mysql");
-var connection = mysql.createConnection({
-    host: "192.168.30.49",
-    user: "team4",
-    password: "team4",
-    database: "team4",
-  });
-connection.connect();
-
-let DrugrunPy = new Promise(function(success, nosuccess) {
-  const { spawn } = require('child_process');
-  const pyprog = spawn('python', ['./Drug.py']);
-  pyprog.stdout.on('data', function(data){
-    success(data);
-  });
-  pyprog.stderr.on('data', (data)=> {
-    nosuccess(data);
-  });
-});
-
-let DrugrunPy = new Promise(function(success, nosuccess) {
-  const { spawn } = require('child_process');
-  const pyprog = spawn('python', ['./Pay.py']);
-  const pyprog = spawn('python', ['./Drug.py']);
-  pyprog.stdout.on('data', function(data){
-    success(data);
-  });
-  pyprog.stderr.on('data', (data)=> {
-    nosuccess(data);
-  });
-});
-
-let InspectionrunPy = new Promise(function(success, nosuccess) {
-
-  const { spawn } = require('child_process');
-  const pyprog = spawn('python', ['./Inspection.py']);
-  pyprog.stdout.on('data', function(data){
-    success(data);
-  });
-  pyprog.stderr.on('data', (data)=> {
-    nosuccess(data);
-  });
-});
 
 var jwt = require('jsonwebtoken');
 var auth = require('./lib/auth');
@@ -77,15 +17,48 @@ var connection = mysql.createConnection({
   });
 connection.connect();
 
+let DrugrunPy = new Promise(function(success, nosuccess) {
+  const { spawn } = require('child_process');
+  const pyprog = spawn('python', ['./Pay.py']);
+  pyprog.stdout.on('data', function(data){
+    success(data);
+  });
+  pyprog.stderr.on('data', (data)=> {
+    nosuccess(data);
+  });
+});
+
+let PayrunPy = new Promise(function(success, nosuccess) {
+  const { spawn } = require('child_process');
+  const pyprog = spawn('python', ['./Drug.py']);
+  pyprog.stdout.on('data', function(data){
+    success(data);
+  });
+  pyprog.stderr.on('data', (data)=> {
+    nosuccess(data);
+  });
+});
+
+let InspectionrunPy = new Promise(function(success, nosuccess) {
+  const { spawn } = require('child_process');
+  const pyprog = spawn('python', ['./Inspection.py']);
+  pyprog.stdout.on('data', function(data){
+    success(data);
+  });
+  pyprog.stderr.on('data', (data)=> {
+    nosuccess(data);
+  });
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
 //login session settings
 app.use(cookieParser());
 app.use(session({
-	secret: 'keyboard cat',
-	resave: false,
-	saveUninitialized: true
+   secret: 'keyboard cat',
+   resave: false,
+   saveUninitialized: true
 }));
 
 app.set('views', __dirname + '/views');
@@ -108,13 +81,13 @@ app.get('/drug', (req, res)=>{
 })
 
 app.get('/inspection', (req, res)=>{
-
   // InspectionrunPy.then(function(fromInspectionRunpy){
-  //   res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});
-  //   console.log(fromInspectionRunpy);
+  // res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});
+  // console.log(fromInspectionRunpy);
   // res.end(fromInspectionRunpy);
   res.json(sampleApiData)
   })
+//////////////////////////////////////////////////////////
 app.get('/', function(req, res) {
     res.render('index');
 })
@@ -153,10 +126,8 @@ app.get('/register', function(req,res){
 });
 
 app.get('/result', function(req,res){
-     res.render('result');
- });
-
-
+    res.render('result');
+});
 
 app.get('/receipt', function(req,res){
     res.render('receipt');
@@ -201,15 +172,12 @@ app.post('/register', function(req, res) {
         if (error) throw error;
         else {
             res.json(1);
-            res.render('index');
         }
     });
     console.log(req.body);
 });
 
 app.post('/login', function(req, res) {
-    console.log(req.body);
-
     var email = req.body.email;
     var password = req.body.password;
 
@@ -227,21 +195,17 @@ app.post('/login', function(req, res) {
               var tokenKey = "fintech1234!" // 토큰키 추가
               jwt.sign(
                 {
-                  userId: results[0].id,
                   userId: results[0].user_id,
                   userEmail: results[0].email,
                 },
                 tokenKey,
                 {
-                  expiresIn: "1d",
                   expiresIn: "7d",
                   issuer: "fintech.admin",
                   subject: "user.login.info",
                 },
                 function (err, token) {
                   console.log("로그인 성공", token);
-                  res.json(token);
-                  
                   var userData = {
                     userId : results[0].user_id,
                     token : token
@@ -256,7 +220,6 @@ app.post('/login', function(req, res) {
             }
           }
         }
-     });
     });
 });
 
@@ -284,14 +247,6 @@ app.post('/result', function(req, res) {
 
 app.post('/list', auth, function(req, res) {
     var option = {
-      method : "GET",
-      url : "https://testapi.openbanking.or.kr/v2.0/user/me",
-      headers : {
-        "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAwNzYxNDE0Iiwic2NvcGUiOlsiaW5xdWlyeSIsImxvZ2luIiwidHJhbnNmZXIiXSwiaXNzIjoiaHR0cHM6Ly93d3cub3BlbmJhbmtpbmcub3Iua3IiLCJleHAiOjE2MTE2MzUzMzMsImp0aSI6ImU0OTc0MGYxLWZmMDUtNDMwMi1iOWM0LWU5MzA2NWVjZTdmNyJ9.cZp7Ll8JYtN0j8RjyjUwMFbeCFVaMjFrhapr7OKvfiA"
-      },
-      qs : {
-        user_seq_no : "1100761414"
-      },
         method : "GET",
         url : "https://testapi.openbanking.or.kr/v2.0/user/me",
         headers : {
@@ -301,12 +256,8 @@ app.post('/list', auth, function(req, res) {
             user_seq_no : "1100761414"
         },
     };
-  
 
     request(option, function(err, response, body){
-      var listDataResult = JSON.parse(body); //JSON 오브젝트를 JS 오브젝트로 변경
-      console.log(listDataResult);
-      res.json(listDataResult);
         var listDataResult = JSON.parse(body); //JSON 오브젝트를 JS 오브젝트로 변경
         console.log(listDataResult);
         res.json(listDataResult);
