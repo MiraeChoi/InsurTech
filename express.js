@@ -3,6 +3,8 @@ const request = require("request");
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const app = express();
+var jwt = require('jsonwebtoken');
+
 
 let DrugrunPy = new Promise(function(success, nosuccess) {
 
@@ -47,8 +49,8 @@ var mysql = require("mysql");
 var connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "gjdmsquf!97",
-    database: "team4",
+    password: "1730",
+    database: "fintech1019",
   });
 connection.connect();
 
@@ -116,9 +118,9 @@ app.get('/register', function(req,res){
     res.render('register');
 });
 
-// app.get('/result', function(req,res){
-//     res.render('result');
-// });
+app.get('/result', function(req,res){
+     res.render('result');
+ });
 
 
 
