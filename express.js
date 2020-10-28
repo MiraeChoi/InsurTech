@@ -15,7 +15,6 @@ var connection = mysql.createConnection({
   });
 connection.connect();
 
-/*
 let DrugrunPy = new Promise(function(success, nosuccess) {
   const { spawn } = require('child_process');
   const pyprog = spawn('python', ['./Drug.py']);
@@ -50,7 +49,6 @@ let InspectionrunPy = new Promise(function(success, nosuccess) {
     nosuccess(data);
   });
 });
-*/
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
