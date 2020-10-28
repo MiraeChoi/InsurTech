@@ -47,10 +47,10 @@ var auth = require('./lib/auth');
 
 var mysql = require("mysql");
 var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "1730",
-    database: "fintech1019",
+    host: "192.168.30.49",
+    user: "team4",
+    password: "team4",
+    database: "team4",
   });
 connection.connect();
 
@@ -103,6 +103,7 @@ app.get('/index', function(req,res){
     console.log(req.session);
 }
     res.render('index');
+});
 app.get('/index', function(req,res) {
     if (!req.session.login) {
         req.session.login = false
@@ -121,12 +122,6 @@ app.get('/index', function(req,res) {
 });
 
 app.get('/login', function(req,res){
-    //res.render('login');
-    let session = req.session;
-
-    res.render('login', {
-        session : session
-    });
     res.render('login');
 });
 
