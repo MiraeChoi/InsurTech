@@ -3,6 +3,7 @@ const request = require("request");
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const app = express();
+var jwt = require('jsonwebtoken');
 const sampleApiData = require('./sample.json')
 
 let DrugrunPy = new Promise(function(success, nosuccess) {
@@ -106,6 +107,15 @@ app.get('/inspection', (req, res)=>{
 app.get('/', function(req, res) {
     res.render('index');
 })
+app.get('/index', function(req,res){
+  if(!req.session.login){
+    req.session.login = false
+    req.session.idx = -1
+} else {
+    console.log(req.session);
+}
+    res.render('index');
+});
 app.get('/index', function(req,res) {
     if (!req.session.login) {
         req.session.login = false
@@ -153,6 +163,10 @@ app.get('/selling', function(req, res) {
 
 app.get('/check', function(req, res) {
     res.render('check');
+});
+
+app.get('/selftest', function(req, res) {
+  res.render('selftest');
 });
 
 app.get('/authTest', auth ,function(req, res){
