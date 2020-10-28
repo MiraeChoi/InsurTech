@@ -19,6 +19,11 @@
               </div>
 
               <h1 id="balanceAmount" class="text-center"></h1>
+              <br>
+              
+              <table id="transactionList" style="width: 100%" class="table table-bordered">
+              </table>
+
               <!-- Contact Section Form-->
               <div class="row">
                   <div class="col-lg-8 mx-auto">
@@ -67,19 +72,21 @@
         <script src="js/scripts.js"></script>
         <script>
           function getQueryStringObject() {
-        var a = window.location.search.substr(1).split("&");
-        if (a == "") return {};
-        var b = {};
-        for (var i = 0; i < a.length; ++i) {
-          var p = a[i].split("=", 2);
-          if (p.length == 1) b[p[0]] = "";
-          else b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
-        }
-        return b;
-      }
-      var qs = getQueryStringObject();
-      var jwtToken = sessionStorage.getItem("ourToken");
-      console.log(qs, jwtToken);
+            var a = window.location.search.substr(1).split("&");
+            if (a == "") return {};
+            var b = {};
+            for (var i = 0; i < a.length; ++i) {
+              var p = a[i].split("=", 2);
+              if (p.length == 1) b[p[0]] = "";
+              else b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+            }
+            return b;
+          }
+
+          var qs = getQueryStringObject();
+          var jwtToken = sessionStorage.getItem("ourToken");
+          console.log(qs, jwtToken);
+
       $.ajax({
         url: "/balance",
         type: "POST",
@@ -96,9 +103,11 @@
           $("#balanceAmount").text(numberFormat(data.balance_amt) + "원");
         },
       });
+
       function numberFormat(inputNumber) {
         return inputNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
+
       $.ajax({
         url: "/transactionlist",
         type: "POST",
@@ -121,7 +130,7 @@
                 element.print_content +
                 "</td><td>" +
                 element.tran_amt +
-                "</td></tr>"
+                "</td></tr></table>"
             );
           }
         },

@@ -5,62 +5,38 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const sampleApiData = require('./sample.json')
 
+var jwt = require('jsonwebtoken');
+var auth = require('./lib/auth');
+
+var mysql = require("mysql");
+var connection = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "dlthdus0518",
+    database: "team4",
+});
+connection.connect();
+
 let DrugrunPy = new Promise(function(success, nosuccess) {
     const { spawn } = require('child_process');
-    const pyprog = spawn('python', ['./Drug.py']);
+    const pyprog = spawn('python', ['./Pay.py']);
     pyprog.stdout.on('data', function(data){
         success(data);
     });
     pyprog.stderr.on('data', (data)=> {
         nosuccess(data);
     });
-}); 
-
-let PayrunPy = new Promise(function(success, nosuccess) {
-var jwt = require('jsonwebtoken');
-var auth = require('./lib/auth');
-
-var mysql = require("mysql");
-var connection = mysql.createConnection({
-    host: "192.168.30.49",
-    user: "team4",
-    password: "team4",
-    database: "team4",
-  });
-connection.connect();
-
-let DrugrunPy = new Promise(function(success, nosuccess) {
-  const { spawn } = require('child_process');
-  const pyprog = spawn('python', ['./Pay.py']);
-  pyprog.stdout.on('data', function(data){
-    success(data);
-  });
-  pyprog.stderr.on('data', (data)=> {
-    nosuccess(data);
-  });
-});
-
-let DrugrunPy = new Promise(function(success, nosuccess) {
-  const { spawn } = require('child_process');
-  const pyprog = spawn('python', ['./Drug.py']);
-  pyprog.stdout.on('data', function(data){
-    success(data);
-  });
-  pyprog.stderr.on('data', (data)=> {
-    nosuccess(data);
-  });
 });
 
 let InspectionrunPy = new Promise(function(success, nosuccess) {
-
-  const { spawn } = require('child_process');
-  const pyprog = spawn('python', ['./Inspection.py']);
-  pyprog.stdout.on('data', function(data){
-    success(data);
-  });
-  pyprog.stderr.on('data', (data)=> {
-    nosuccess(data);
-  });
+    const { spawn } = require('child_process');
+    const pyprog = spawn('python', ['./Inspection.py']);
+    pyprog.stdout.on('data', function(data){
+        success(data);
+    });
+    pyprog.stderr.on('data', (data)=> {
+        nosuccess(data);
+    });
 });
 
 app.use(express.json());
@@ -102,7 +78,8 @@ app.get('/inspection', (req, res)=>{
   // res.end(fromInspectionRunpy);
   res.json(sampleApiData)
   })
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+
 app.get('/', function(req, res) {
     res.render('index');
 })
@@ -139,7 +116,7 @@ app.get('/receipt', function(req,res){
     res.render('receipt');
 });
 
-app.get('/accountCheck', function(req,res){
+app.get('/accountCheck', function(req,res) {
     res.render('accountCheck');
 });
 
@@ -159,7 +136,7 @@ app.get('/authTest', auth ,function(req, res){
   console.log(req.decoded);
   //토큰에 있는 데이터 확인
   res.json("로그인 성공! / 컨텐츠를 볼 수 있습니다.")
-})
+});
 
 app.post('/register', function(req, res) {
     var username = req.body.username;
@@ -226,15 +203,15 @@ app.post('/login', function(req, res) {
 });
 
 app.post('/result', function(req, res) {
-  var user_id = req.body.userId;
-  var ins1 = req.body.ins1;
-  var ins2 = req.body.ins2;
-  var ins3 = req.body.ins3;
-  var ins4 = req.body.ins4;
-  var ins5 = req.body.ins5;
-  var ins6 = req.body.ins6;
+    var user_id = req.body.userId;
+    var ins1 = req.body.ins1;
+    var ins2 = req.body.ins2;
+    var ins3 = req.body.ins3;
+    var ins4 = req.body.ins4;
+    var ins5 = req.body.ins5;
+    var ins6 = req.body.ins6;
 
-  var insInsertSql = "INSERT INTO institution (`user_id`, `seoul_univ_hospital`, `severance_hospital`, `seoul_samsung_hospital`, `samsung_biologics`, `celltrion`, `sk_biopharm`) VALUES (?, ?, ?, ?, ?, ?, ?);";
+    var insInsertSql = "INSERT INTO institution (`user_id`, `seoul_univ_hospital`, `severance_hospital`, `seoul_samsung_hospital`, `samsung_biologics`, `celltrion`, `sk_biopharm`) VALUES (?, ?, ?, ?, ?, ?, ?);";
 
     connection.query(insInsertSql, [user_id, ins1, ins2, ins3, ins4, ins5, ins6], function (error, results, fields) {
         if (error) throw error;
@@ -259,14 +236,14 @@ app.post('/list', auth, function(req, res) {
         },
     };
 
-    request(option, function(err, response, body){
+    request(option, function(err, response, body) {
         var listDataResult = JSON.parse(body); //JSON 오브젝트를 JS 오브젝트로 변경
         console.log(listDataResult);
         res.json(listDataResult);
     });
 });
 
-app.post('/balance', auth , function(req, res){
+app.post('/balance', auth , function(req, res) {
     var userId = req.decoded.userId;
     var finusenum = req.body.fin_use_num;
     console.log(finusenum);
@@ -277,43 +254,43 @@ app.post('/balance', auth , function(req, res){
     var userSearchSql = "SELECT * FROM user WHERE email = ?";
     var countnum = Math.floor(Math.random() * 1000000000) + 1;
     var transId = "T991646210U" + countnum; // 이용기관번호 본인것 입력
-    connection.query(userSearchSql,[userId], function(err, results){
+    connection.query(userSearchSql,[userId], function(err, results) {
         if(err) throw err;
         else {
             var option = {
-            method: "GET",
-            url: "https://testapi.openbanking.or.kr/v2.0/account/balance/fin_num",
-            headers: {
-                "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAwNzYxNDE0Iiwic2NvcGUiOlsiaW5xdWlyeSIsImxvZ2luIiwidHJhbnNmZXIiXSwiaXNzIjoiaHR0cHM6Ly93d3cub3BlbmJhbmtpbmcub3Iua3IiLCJleHAiOjE2MTE2MzUzMzMsImp0aSI6ImU0OTc0MGYxLWZmMDUtNDMwMi1iOWM0LWU5MzA2NWVjZTdmNyJ9.cZp7Ll8JYtN0j8RjyjUwMFbeCFVaMjFrhapr7OKvfiA"
-            },
-            //form 형태는 form / 쿼리스트링 형태는 qs / json 형태는 json ***
-            qs: {
-                bank_tran_id : transId,
-                fintech_use_num : "199164621057885695842943",
-                tran_dtime : "20201022144300"
-            },
+                method: "GET",
+                url: "https://testapi.openbanking.or.kr/v2.0/account/balance/fin_num",
+                headers: {
+                    "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAwNzYxNDE0Iiwic2NvcGUiOlsiaW5xdWlyeSIsImxvZ2luIiwidHJhbnNmZXIiXSwiaXNzIjoiaHR0cHM6Ly93d3cub3BlbmJhbmtpbmcub3Iua3IiLCJleHAiOjE2MTE2MzUzMzMsImp0aSI6ImU0OTc0MGYxLWZmMDUtNDMwMi1iOWM0LWU5MzA2NWVjZTdmNyJ9.cZp7Ll8JYtN0j8RjyjUwMFbeCFVaMjFrhapr7OKvfiA"
+                },
+                //form 형태는 form / 쿼리스트링 형태는 qs / json 형태는 json ***
+                qs: {
+                    bank_tran_id : transId,
+                    fintech_use_num : "199164621057885695842943",
+                    tran_dtime : "20201022144300"
+                },
             };
             request(option, function(err, response, body){
-            var balanceData = JSON.parse(body); //JSON 오브젝트를 JS 오브젝트로 변경
-            console.log(balanceData);
-            res.json(balanceData)
-            })    
+                var balanceData = JSON.parse(body); //JSON 오브젝트를 JS 오브젝트로 변경
+                console.log(balanceData);
+                res.json(balanceData)
+            })
         }
     })
 });
 
-app.post('/transactionlist', auth, function(req, res){
-    var userId = req.decoded.userId;
-    var finusenum = req.body.fin_use_num; 
+app.post('/transactionlist', auth, function(req, res) {
+    var email = req.decoded.email;
+    var finusenum = "199164621057885695842943"; 
     var userSearchSql = "SELECT * FROM user WHERE email = ?";
     var countnum = Math.floor(Math.random() * 1000000000) + 1;
     var transId = "T991646210U" + countnum; //이용기관번호 본인것 입력
 
-    connection.query(userSearchSql,[userId], function(err, results){
+    connection.query(userSearchSql,[email], function(err, results){
         if(err) throw err;
         else {
             var option = {
-                method: "POST",
+                method: "GET",
                 url: "https://testapi.openbanking.or.kr/v2.0/account/transaction_list/fin_num",
                 headers: {
                 "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAwNzYxNDE0Iiwic2NvcGUiOlsiaW5xdWlyeSIsImxvZ2luIiwidHJhbnNmZXIiXSwiaXNzIjoiaHR0cHM6Ly93d3cub3BlbmJhbmtpbmcub3Iua3IiLCJleHAiOjE2MTE2MzUzMzMsImp0aSI6ImU0OTc0MGYxLWZmMDUtNDMwMi1iOWM0LWU5MzA2NWVjZTdmNyJ9.cZp7Ll8JYtN0j8RjyjUwMFbeCFVaMjFrhapr7OKvfiA"
