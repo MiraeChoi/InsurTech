@@ -4,20 +4,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const sampleApiData = require('./sample.json');
 const app = express();
-const sampleApiData = require('./sample.json')
 
-let DrugrunPy = new Promise(function(success, nosuccess) {
-    const { spawn } = require('child_process');
-    const pyprog = spawn('python', ['./Drug.py']);
-    pyprog.stdout.on('data', function(data){
-        success(data);
-    });
-    pyprog.stderr.on('data', (data)=> {
-        nosuccess(data);
-    });
-}); 
-
-let PayrunPy = new Promise(function(success, nosuccess) {
 var jwt = require('jsonwebtoken');
 var auth = require('./lib/auth');
 
@@ -93,11 +80,10 @@ app.get('/drug', (req, res)=>{
   });
 })
 
-
 app.get('/inspection', (req, res)=>{
   // InspectionrunPy.then(function(fromInspectionRunpy){
-  //   res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});
-  //   console.log(fromInspectionRunpy);
+  // res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});
+  // console.log(fromInspectionRunpy);
   // res.end(fromInspectionRunpy);
   res.json(sampleApiData)
   })
