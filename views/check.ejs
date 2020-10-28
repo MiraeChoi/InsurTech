@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('head.ejs') %>
+  </head>
+    <body id="page-top">
+        <%- include('navigation.ejs') %>
+        <br><br><br>
+        <!-- Check Section-->
+        <section class="page-section" id="contact">
+            <div class="container">
+                <!-- Check Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">기관 선택</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- Check Section Form-->
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
+                        <form id="contactForm" name="sentMessage" action="/result" method="POST" novalidate="novalidate">
+                            <div id="sale"></div>
+                            <div class="form-group " style="text-align:left">
+                              <label><input type="checkbox" id="ins1" name="institution1" value="서울대학교 병원">서울대학교 병원</label>
+                              <br>
+                              <label><input type="checkbox" id="ins2" name="institution2" value="세브란스병원">세브란스병원</label>
+                              <br>
+                              <label><input type="checkbox" id="ins3" name="institution3" value="서울삼성병원">서울삼성병원</label>
+                              <br>
+                              <label><input type="checkbox" id="ins4" name="institution4" value="삼성 바이오로직스">삼성 바이오로직스</label>
+                              <br>
+                              <label><input type="checkbox" id="ins5" name="institution5" value="셀트리온">셀트리온</label>
+                              <br>
+                              <label><input type="checkbox" id="ins6" name="institution6" value="sk 바이오팜">sk 바이오팜</label>
+                          </div>
+                            
+                            <div id="down"></div>
+                            <div class="form-group">
+                              <a class="btn btn-xl btn-primary" style="width: 100%;" href="#" onclick="send();">
+                                  결과보기
+                              </a>
+                          </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <%- include('footer.ejs') %>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <!-- Contact form JS-->
+        <script src="assets/mail/jqBootstrapValidation.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+
+              <script>
+          function send() {
+            var user_id = sessionStorage.getItem('id');
+            var ins1Res = document.getElementById("ins1").checked;
+            var ins2Res = document.getElementById("ins2").checked;
+            var ins3Res = document.getElementById("ins3").checked;
+            var ins4Res = document.getElementById("ins4").checked;
+            var ins5Res = document.getElementById("ins5").checked;
+            var ins6Res = document.getElementById("ins6").checked;
+
+            if(ins1Res)
+                var ins1 = 1;
+            else
+                var ins1 = 0;
+
+            if(ins2Res)
+                var ins2 = 1;
+            else
+                var ins2 = 0;
+            
+            if(ins3Res)
+                var ins3 = 1;
+            else
+                var ins3 = 0;
+
+            if(ins4Res)
+                var ins4 = 1;
+            else
+                var ins4 = 0;
+            
+            if(ins5Res)
+                var ins5 = 1;
+            else
+                var ins5 = 0;
+
+            if(ins6Res)
+                var ins6 = 1;
+            else
+                var ins6 = 0;
+            
+            $.ajax({
+				url:'/result',
+				type : 'POST',
+				data : {
+                    userId: user_id,
+                    ins1: ins1,
+                    ins2: ins2,
+                    ins3: ins3,
+                    ins4: ins4,
+                    ins5: ins5,
+                    ins6: ins6
+				},
+				success:function(responseData){
+				  if(responseData == "1"){
+					window.location.href = "/result";
+				  }
+				}
+			})
+          }
+      </script>
+  </body>
+</html>

@@ -1,10 +1,15 @@
-from flask import Flask
+from flask import Flask, request, render_template
+from Main import Results
+from flask_cors import CORS
+
 app = Flask(__name__)
 
-@app.route('/', methods=['POST'])
+@app.route('/test', methods=['GET'])
+
 def result():
-/*    total_result = 
+    a = Results.result()
 
+    return a
 
-if __name__ == '__main__':
-    app.run(debug=False, port=80)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port='5000', debug=True)
