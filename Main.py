@@ -14,7 +14,6 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 class Results():
     def result():
-
         #변수 세팅
         API_KEY					= "bc732587dcce4d28a538e33c43ede40b"							
         IDENTITY_NUMBER			= ""						#주민등록번호

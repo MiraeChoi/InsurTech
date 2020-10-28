@@ -1,7 +1,8 @@
 # Dependency directories
 node_modules/
 
-# Private Info
-signCert.der
-signpri.key
-AES.js
+# # Private Info
+# signCert.der
+# signpri.key
+# AES.js
+# Main.py
