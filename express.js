@@ -45,9 +45,9 @@ app.use(express.static(__dirname + '/public'));
 //login session settings
 app.use(cookieParser());
 app.use(session({
-	secret: 'keyboard cat',
-	resave: false,
-	saveUninitialized: true
+   secret: 'keyboard cat',
+   resave: false,
+   saveUninitialized: true
 }));
 
 app.set('views', __dirname + '/views');
@@ -114,9 +114,18 @@ app.get('/register', function(req,res){
     res.render('register');
 });
 
+app.get('/result', function(req,res){
+  res.render('result');
+});
+
 app.get('/result2', function(req,res){
     res.render('result2');
 });
+
+app.get('/result', function(req,res){
+  res.render('result');
+});
+
 
 app.get('/result3', function(req,res){
   res.render('result3');
