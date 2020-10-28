@@ -79,6 +79,7 @@
                 alert("로그인 성공");
                 window.location.href = "/index";
                 sessionStorage.setItem('id', data.userId);
+                sessionStorage.setItem('email', data.email);
                 sessionStorage.setItem('ourToken', data.token);
               }
           },
