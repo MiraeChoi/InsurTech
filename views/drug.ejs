@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -24,7 +25,7 @@
                       <form id="contactForm" name="sentMessage" novalidate="novalidate">
                           <div class="control-group">
                               <div class="form-group floating-label-form-group controls mb-0 pb-2"  style="border:1px solid; padding:10px;border-width: medium;">
-                                <div id="resultDiv"></div> 
+                                안녕하세요 
                               </div>
                           </div>
                           <br><br>
@@ -52,37 +53,16 @@
         <!-- Contact form JS-->
         <script src="assets/mail/jqBootstrapValidation.js"></script>
         <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
         <script>
-
             function myFunction() {
                 var result=confirm("2000원이 입금되었습니다.");
                 if(result){
                     location.href="receipt";
                 }    
-                //ajax 요청
+
             }
-            $.ajax({
-                url:'http://localhost:3000/inspection',
-                type : 'GET',
-                data : {
-                },
-                success:function(data){
-                  $("#resultDiv").html(
-                    "<table border=3 bordercolor=black width=500 height=300 align=center>"+
-                      "<tr align=center><td><strong>항목</td><td><strong>상세내역</strong></td></tr>"+
-                      "<tr align=center><td>"+data.Location+"</td><td>"+data.Inspections[0].Gubun+"</td></tr>"+
-                      "<tr align=center><td><strong>항목</td><td><strong>결과</td></tr>" +
-                      "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[0].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[0].Name+"</td></tr>"+
-                      "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[1].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[1].Value+"</td></tr>"+
-                      "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[2].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[2].Value+"</td></tr>"+
-                      "<tr align=center><td>"+data.Inspections[0].Illnesses[0].Items[3].Name+"</td><td>"+data.Inspections[0].Illnesses[0].Items[3].Value+"</td></tr>"+
-                    "</table>"
-                  )
-
-                }
-            })       
-
-          </script>
+            </script>
 
   </body>
 </html>
