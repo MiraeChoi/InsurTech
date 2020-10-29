@@ -10,9 +10,9 @@ var auth = require('./lib/auth');
 
 var mysql = require("mysql");
 var connection = mysql.createConnection({
-    host: "127.0.0.1",
-    user: "team4",
-    password: "team4",
+    host: "localhost",
+    user: "root",
+    password: "dlthdus0518",
     database: "team4",
 });
 connection.connect();
@@ -194,7 +194,7 @@ app.post('/login', function(req, res) {
           }
           else {
             var storedPassword = results[0].password;
-            if(password == storedPassword){
+            if (password == storedPassword) {
               var tokenKey = "fintech1234!" // 토큰키 추가
               jwt.sign(
                 {
@@ -215,6 +215,7 @@ app.post('/login', function(req, res) {
                     token : token
                   }
                   res.json(userData);
+                  res.redirect('/index');
                 }
               );
             }
