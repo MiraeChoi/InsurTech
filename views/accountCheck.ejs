@@ -119,7 +119,7 @@
         },
         success: function (data) {
           console.log(data);
-          for (var i = 0; i < data.res_list.length; i++) {
+          for (var i = 0; i < 6; i++) {
             var element = data.res_list[i];
             $("#transactionList").append(
               "<tr><td>" +
@@ -130,7 +130,7 @@
                 element.print_content +
                 "</td><td>" +
                 element.tran_amt +
-                "</td></tr></table>"
+                "원</td></tr></table>"
             );
           }
         },
