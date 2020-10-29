@@ -10,7 +10,7 @@ var auth = require('./lib/auth');
 
 var mysql = require("mysql");
 var connection = mysql.createConnection({
-    host: "172.30.1.21",
+    host: "127.0.0.1",
     user: "team4",
     password: "team4",
     database: "team4",
@@ -80,31 +80,33 @@ app.get('/inspection', (req, res)=>{
 app.get('/', function(req, res) {
     res.render('index');
 })
-app.get('/index', function(req,res){
-  if(!req.session.login){
-    req.session.login = false
-    req.session.idx = -1
-} else {
-    console.log(req.session);
-}
-    res.render('index');
-});
-app.get('/index', function(req,res) {
-    if (!req.session.login) {
-        req.session.login = false
-        req.session.idx = -1
 
-        res.render('index', {
-            login : true
-        });
-    } else {
-        console.log(req.session);
-        res.render('index', {
-            login : false
-        })
-        
-    }
+app.get('/index', function(req,res){
+  // if(!req.session.login){
+  //   req.session.login = false
+  //   req.session.idx = -1
+  // } else {
+  //   console.log(req.session);
+  // }
+  res.render('index');
 });
+
+// app.get('/index', function(req,res) {
+//     if (!req.session.login) {
+//         req.session.login = false
+//         req.session.idx = -1
+
+//         res.render('index', {
+//             login : true
+//         });
+//     } else {
+//         console.log(req.session);
+//         res.render('index', {
+//             login : false
+//         })
+        
+//     }
+// });
 
 app.get('/login', function(req,res){
     res.render('login');
@@ -122,15 +124,9 @@ app.get('/result2', function(req,res){
     res.render('result2');
 });
 
-app.get('/result', function(req,res){
-  res.render('result');
-});
-
-
 app.get('/result3', function(req,res){
   res.render('result3');
 });
-
 
 app.get('/selftest', function(req,res){
   res.render('selftest');
@@ -215,6 +211,7 @@ app.post('/login', function(req, res) {
                   console.log("로그인 성공", token);
                   var userData = {
                     userId : results[0].user_id,
+                    email : results[0].email,
                     token : token
                   }
                   res.json(userData);
