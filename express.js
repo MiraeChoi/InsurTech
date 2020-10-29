@@ -10,9 +10,9 @@ var auth = require('./lib/auth');
 
 var mysql = require("mysql");
 var connection = mysql.createConnection({
-    host: "172.30.1.21",
-    user: "team4",
-    password: "team4",
+    host: "localhost",
+    user: "root",
+    password: "dlthdus0518",
     database: "team4",
 });
 connection.connect();
@@ -79,16 +79,8 @@ app.get('/inspection', (req, res)=>{
 
 app.get('/', function(req, res) {
     res.render('index');
-})
-app.get('/index', function(req,res){
-  if(!req.session.login){
-    req.session.login = false
-    req.session.idx = -1
-} else {
-    console.log(req.session);
-}
-    res.render('index');
 });
+
 app.get('/index', function(req,res) {
     if (!req.session.login) {
         req.session.login = false
@@ -198,7 +190,7 @@ app.post('/login', function(req, res) {
           }
           else {
             var storedPassword = results[0].password;
-            if(password == storedPassword){
+            if (password == storedPassword) {
               var tokenKey = "fintech1234!" // 토큰키 추가
               jwt.sign(
                 {
@@ -218,6 +210,7 @@ app.post('/login', function(req, res) {
                     token : token
                   }
                   res.json(userData);
+                  res.redirect('/index');
                 }
               );
             }
