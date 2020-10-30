@@ -1,0 +1,12 @@
+# Dependency directories
+node_modules/
+
+# Private Info
+signCert.der
+signpri.key
+AES.js
+Main.py
+pay.py
+drug.py
+inspection.py
+sample.json

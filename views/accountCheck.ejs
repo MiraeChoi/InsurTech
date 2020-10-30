@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('head.ejs') %>
+  </head>
+    <body id="page-top">
+        <%- include('navigation.ejs') %>
+        <br><br><br>
+        <!-- Contact Section-->
+        <section class="page-section" id="contact">
+          <div class="container">
+              <!-- Contact Section Heading-->
+              <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">마이 계좌</h2>
+              <!-- Icon Divider-->
+              <div class="divider-custom">
+                  <div class="divider-custom-line"></div>
+                  <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                  <div class="divider-custom-line"></div>
+              </div>
+
+              <h1 id="balanceAmount" class="text-center"></h1>
+              <br>
+              
+              <table id="transactionList" style="width: 100%" class="table table-bordered">
+              </table>
+
+              <!-- Contact Section Form-->
+              <div class="row">
+                  <div class="col-lg-8 mx-auto">
+                      <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
+                      <form id="contactForm" name="sentMessage" novalidate="novalidate">
+                          <!-- <div class="control-group">
+                              <div class="form-group floating-label-form-group controls mb-0 pb-2"> 
+                                <h6 id="receipt" style="color: dimgray;">계좌번호</h6>
+                              </div>
+                          </div>
+                          <br>
+                          <div class="control-group">
+                            <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                              <h6 id="receipt" style="color: dimgray;">은행명</h6>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="control-group">
+                          <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                            <h6 id="receipt" style="color: dimgray;">거래내역</h6>
+                          </div>
+                      </div> -->
+
+                      <section class="bal-section container" id="cardList"></section>
+                          <br><br>
+                          <div id="check"></div>
+                          <div class="form-group">
+
+                            <a href="index" onclick="return console.log()" class="btn btn-primary btn-xl" id="saleBtn" type="submit" style="width:100%;">확인</a>
+
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <%- include('footer.ejs') %>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <!-- Contact form JS-->
+        <script src="assets/mail/jqBootstrapValidation.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <script>
+          function getQueryStringObject() {
+            var a = window.location.search.substr(1).split("&");
+            if (a == "") return {};
+            var b = {};
+            for (var i = 0; i < a.length; ++i) {
+              var p = a[i].split("=", 2);
+              if (p.length == 1) b[p[0]] = "";
+              else b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+            }
+            return b;
+          }
+
+          var qs = getQueryStringObject();
+          var jwtToken = sessionStorage.getItem("ourToken");
+          console.log(qs, jwtToken);
+
+      $.ajax({
+        url: "/balance",
+        type: "POST",
+        headers: {
+          ourtoken: jwtToken,
+        },
+        //accessToken 아님!!!!!
+        data: {
+          fin_use_num: qs.fin_use_num,
+        },
+        //req.body.fin_use_num 추가해서 보내기
+        success: function (data) {
+          console.log("해당 계좌의 잔액은 :", data.balance_amt);
+          $("#balanceAmount").text(numberFormat(data.balance_amt) + "원");
+        },
+      });
+
+      function numberFormat(inputNumber) {
+        return inputNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+
+      $.ajax({
+        url: "/transactionlist",
+        type: "POST",
+        headers: {
+          ourtoken: jwtToken,
+        },
+        data: {
+          fin_use_num: qs.fin_use_num,
+        },
+        success: function (data) {
+          console.log(data);
+          for (var i = 0; i < 6; i++) {
+            var element = data.res_list[i];
+            $("#transactionList").append(
+              "<tr><td>" +
+                (i + 1) +
+                "</td><td>" +
+                element.inout_type +
+                "</td><td>" +
+                element.print_content +
+                "</td><td>" +
+                element.tran_amt +
+                "원</td></tr></table>"
+            );
+          }
+        },
+      });
+        </script>
+  </body>
+</html>
