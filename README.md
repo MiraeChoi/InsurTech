@@ -12,5 +12,6 @@ KISA 핀테크 아카데미에서 진행한 10월 핀테크 프로젝트 - 마�
 <br>
 
 ## 사용 스택
+- Html
 - JavaScript
 - Python
